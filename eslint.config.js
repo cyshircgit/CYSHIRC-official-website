@@ -24,11 +24,11 @@ export default ts.config(
 
 	{
 		languageOptions: {
-			globals: { ...globals.browser, ...globals.node },
+			globals: { ...globals.browser, ...globals.node }
 		},
 		rules: {
-			'no-undef': 'off',
-		},
+			'no-undef': 'off'
+		}
 	},
 
 	{
@@ -38,13 +38,13 @@ export default ts.config(
 				projectService: true,
 				extraFileExtensions: ['.svelte'],
 				parser: ts.parser,
-				svelteConfig,
-			},
+				svelteConfig
+			}
 		},
 		rules: {
 			'svelte/no-reactive-reassign': 'error',
 			'svelte/require-each-key': 'error',
-			'svelte/no-unused-svelte-ignore': 'warn',
-		},
+			'svelte/no-unused-svelte-ignore': 'warn'
+		}
 	}
 );
