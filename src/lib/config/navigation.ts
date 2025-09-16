@@ -1,9 +1,15 @@
-export const menuItems = [
-	{ href: '#announcements', text: '公告與活動' },
-	{ href: '#calendar', text: '行事曆與排程' },
-	{ href: '#projects', text: '最新專案與成果展示' },
-	{ href: '#join', text: '加入我們' },
-	{ href: '#resources', text: '學習資源與教材' },
-	{ href: '#faq', text: '常見問答（FAQ）' },
-	{ href: '#team', text: '社團幹部介紹' }
+export interface MenuItem {
+	href: string;
+	text: string;
+}
+
+export const menuItems: MenuItem[] = [
+	{ href: '/', text: '首頁' },
+	{ href: '/about', text: '關於我們' },
+	{ href: '/projects', text: '專案' },
+	{ href: '/blog', text: '部落格' },
+	{ href: '/contact', text: '聯絡我們' },
+	{ href: '/members', text: '成員' },
+	{ href: '/resources', text: '資源' },
+	{ href: '/events', text: '活動' },
 ];
