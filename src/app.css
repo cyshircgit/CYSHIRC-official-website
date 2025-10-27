@@ -1,2 +1,9 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
+
+@theme {
+	--color-crimson: #ce1a4b;
+	--color-crimson-dark: #a01538;
+	--color-neon-green: #d4ff00;
+	--color-gray-dark: #1d1f25;
+}
