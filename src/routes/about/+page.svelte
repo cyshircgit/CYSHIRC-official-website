@@ -44,25 +44,31 @@
 			description: '提供應用開發與資安兩大專業方向'
 		},
 		{
-			icon: IconTrophy,
-			title: '實戰競賽經驗',
-			description: '定期舉辦資安與競程比賽，累積實戰經驗'
-		},
-		{
 			icon: IconUsersGroup,
-			title: '專業師資指導',
-			description: '學長姐全程指導，與SCIST.tw合作'
+			title: '專業師資陣容',
+			description: '業界講師與學長姐親自指導'
 		},
 		{
-			icon: IconDeviceLaptop,
-			title: '多元技術領域',
-			description: '從程式開發到硬體實作，涵蓋完整技術棧'
+			icon: IconTrophy,
+			title: '競賽培訓機會',
+			description: '參與APCS、資安競賽等活動'
+		},
+		{
+			icon: IconHeartHandshake,
+			title: '友善學習環境',
+			description: '適合各程度學生共同成長'
 		}
 	];
 </script>
 
+<svelte:head>
+	<title>關於我們 - CYSHIRC 嘉義高中資訊研究社</title>
+	<meta name="description" content="CYSHIRC 致力於為學生提供優質的程式教育環境，透過系統化課程、專案實作與競賽參與，培養學生的技術能力與團隊合作精神。" />
+	<meta property="og:title" content="關於我們 - CYSHIRC" />
+	<meta property="og:description" content="培養未來科技人才，提供優質的程式教育環境。" />
+</svelte:head>
+
 <div class="page">
-	<!-- Hero Section -->
 	<section class="hero">
 		<div class="container">
 			<div class="hero-content">
@@ -77,7 +83,6 @@
 		</div>
 	</section>
 
-	<!-- Stats Section -->
 	<section class="stats-section">
 		<div class="container">
 			<div class="stats-grid">
@@ -91,7 +96,6 @@
 		</div>
 	</section>
 
-	<!-- Introduction Section -->
 	<section class="intro-section">
 		<div class="container">
 			<div class="intro-content">
@@ -112,7 +116,6 @@
 		</div>
 	</section>
 
-	<!-- Courses Section -->
 	<section class="courses-section">
 		<div class="container">
 			<h2 class="section-title">雙軌<span class="highlight">課程設計</span></h2>
@@ -130,7 +133,6 @@
 		</div>
 	</section>
 
-	<!-- Tech Fields Section -->
 	<section class="tech-section">
 		<div class="container">
 			<h2 class="section-title">多元<span class="highlight">技術領域</span></h2>
@@ -148,7 +150,6 @@
 		</div>
 	</section>
 
-	<!-- Features Section -->
 	<section class="features-section">
 		<div class="container">
 			<h2 class="section-title">社團<span class="highlight">特點</span></h2>
@@ -166,7 +167,6 @@
 		</div>
 	</section>
 
-	<!-- CTA Section -->
 	<section class="cta-section">
 		<div class="container">
 			<div class="cta-content">

@@ -35,55 +35,44 @@
 	/>
 </svelte:head>
 
-<nav class="sticky top-0 z-50 bg-crimson/95 backdrop-blur-sm border-b border-crimson-dark">
-	<div class="max-w-[1440px] mx-auto px-14 max-lg:px-8 max-md:px-6">
-		<div class="flex items-center justify-between h-20">
-			<!-- Logo -->
-			<a href="/" class="text-white text-xl font-black uppercase tracking-tight">CYSHIRC.</a>
+<nav class="navbar">
+	<div class="navbar-container">
+		<div class="navbar-content">
+			<a href="/" class="navbar-logo">CYSHIRC.</a>
 
-			<!-- Desktop Navigation -->
-			<nav class="desktop-nav max-md:!hidden">
+			<nav class="desktop-nav">
 				<a href="/" class="nav-link">首頁</a>
 				<a href="/events" class="nav-link">活動資訊</a>
 				<a href="/contact" class="nav-link">聯絡資訊</a>
 			</nav>
 
-		<!-- Mobile: Show both Hamburger and CTA Button -->
-		<div class="md:hidden flex items-center gap-3">
-			<!-- Hamburger Button -->
-			<button
-				onclick={toggleMobileMenu}
-				class="text-white bg-transparent p-0 border-0 cursor-pointer"
-				aria-label="Toggle menu"
-			>
-				{#if mobileMenuOpen}
-					<IconX size={28} stroke={2} />
-				{:else}
-					<IconMenu2 size={28} stroke={2} />
-				{/if}
-			</button>
+			<div class="mobile-nav-toggle">
+				<button
+					onclick={toggleMobileMenu}
+					class="menu-button"
+					aria-label="Toggle menu"
+				>
+					{#if mobileMenuOpen}
+						<IconX size={28} stroke={2} />
+					{:else}
+						<IconMenu2 size={28} stroke={2} />
+					{/if}
+				</button>
 
-			<!-- Mobile CTA Button (活動) -->
-			<a
-				href="/events"
-				class="cta-button inline-flex items-center gap-2 bg-white text-crimson px-5 py-2.5 rounded-full font-bold text-sm tracking-wide uppercase transition-all duration-300 border-2 border-white hover:bg-transparent hover:text-white hover:shadow-lg"
-			>
-				活動
-				<IconArrowRight size={18} stroke={2.5} class="transition-transform duration-300" />
-			</a>
-		</div>			<!-- Desktop CTA Button (關於我們) -->
-			<a
-				href="/about"
-				class="cta-button max-md:!hidden inline-flex items-center gap-2 bg-white text-crimson px-6 py-3 rounded-full font-bold text-sm tracking-wide uppercase transition-all duration-300 border-2 border-white hover:bg-transparent hover:text-white hover:shadow-lg"
-			>
+				<a href="/events" class="cta-button mobile-cta">
+					活動資訊
+					<IconArrowRight size={18} stroke={2.5} />
+				</a>
+			</div>
+
+			<a href="/about" class="cta-button desktop-cta">
 				關於我們
-				<IconArrowRight size={18} stroke={2.5} class="transition-transform duration-300" />
+				<IconArrowRight size={18} stroke={2.5} />
 			</a>
 		</div>
 	</div>
 </nav>
 
-<!-- Mobile Menu Overlay -->
 {#if mobileMenuOpen}
 	<div class="mobile-menu animate-slideDown">
 		<nav class="mobile-nav">
@@ -106,7 +95,7 @@
 {@render children?.()}
 
 <style lang="scss">
-	$crimson-primary: #ce1a4b;
+	@use '$lib/styles/theme' as theme;
 	$white: #ffffff;
 
 	:global(*) {
@@ -133,10 +122,114 @@
 		text-decoration: none;
 	}
 
+	.navbar {
+		position: sticky;
+		top: 0;
+		z-index: 50;
+		background: rgba(theme.$crimson-primary, 0.95);
+		backdrop-filter: blur(10px);
+		border-bottom: 1px solid theme.$crimson-dark;
+	}
+
+	.navbar-container {
+		max-width: 1440px;
+		margin: 0 auto;
+		padding: 0 3.5rem;
+
+		@media (max-width: 1024px) {
+			padding: 0 2rem;
+		}
+
+		@media (max-width: 768px) {
+			padding: 0 1.5rem;
+		}
+	}
+
+	.navbar-content {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 80px;
+	}
+
+	.navbar-logo {
+		color: $white;
+		font-size: 1.25rem;
+		font-weight: 900;
+		text-transform: uppercase;
+		letter-spacing: -0.02em;
+	}
+
 	.desktop-nav {
 		display: flex;
 		align-items: center;
 		gap: 2rem;
+
+		@media (max-width: 768px) {
+			display: none;
+		}
+	}
+
+	.mobile-nav-toggle {
+		display: none;
+		align-items: center;
+		gap: 0.75rem;
+
+		@media (max-width: 768px) {
+			display: flex;
+		}
+	}
+
+	.menu-button {
+		color: $white;
+		background: transparent;
+		padding: 0;
+		border: none;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.cta-button {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		background: $white;
+		color: theme.$crimson-primary;
+		padding: 0.75rem 1.5rem;
+		border-radius: 100px;
+		font-weight: 700;
+		font-size: 0.875rem;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		transition: all 0.3s theme.$transition-smooth;
+		border: 2px solid $white;
+
+		&:hover {
+			background: transparent;
+			color: $white;
+			box-shadow: 0 8px 24px rgba($white, 0.2);
+
+			:global(svg) {
+				transform: translateX(4px);
+			}
+		}
+
+		:global(svg) {
+			transition: transform 0.3s theme.$transition-smooth;
+		}
+
+		&.mobile-cta {
+			padding: 0.625rem 1.25rem;
+			font-size: 0.75rem;
+		}
+
+		&.desktop-cta {
+			@media (max-width: 768px) {
+				display: none;
+			}
+		}
 	}
 
 	.nav-link {
@@ -173,8 +266,28 @@
 		}
 	}
 
-	.cta-button:hover :global(svg) {
-		transform: translateX(4px);
+	:global(.container) {
+		@include theme.container;
+	}
+
+	:global(.section-label) {
+		@include theme.section-label;
+	}
+
+	:global(.section-title) {
+		@include theme.section-title();
+	}
+
+	:global(.highlight) {
+		@include theme.highlight;
+	}
+
+	:global(.btn-primary) {
+		@include theme.btn-primary;
+	}
+
+	:global(.btn-secondary) {
+		@include theme.btn-secondary;
 	}
 
 	.mobile-menu {
@@ -182,7 +295,7 @@
 		top: 80px;
 		left: 0;
 		right: 0;
-		background: $crimson-primary;
+		background: theme.$crimson-primary;
 		border-bottom: 1px solid rgba(160, 21, 56, 1);
 		z-index: 40;
 		padding: 1rem 0;

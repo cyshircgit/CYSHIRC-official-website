@@ -9,10 +9,10 @@
 
 ```json
 {
-  "memberCount": 45,        // 社員人數
-  "currentClass": "116級",  // 當前屆別
-  "semesterFee": "500",     // 學期社費（元）
-  "foundedYear": "2010"     // 創立年份
+  "memberCount": 45,
+  "currentClass": "116級",
+  "semesterFee": "500",
+  "foundedYear": "2010"
 }
 ```
 
@@ -32,7 +32,7 @@
     "date": "2024.11",
     "title": "新生迎新茶會",
     "description": "活動描述...",
-    "icon": "IconUsers"  // 對應的 Tabler Icon 名稱
+    "icon": "IconUsers"
   }
 ]
 ```
@@ -79,7 +79,7 @@
 編輯 `stats.json`：
 ```json
 {
-  "memberCount": 50  // 改成新的人數
+  "memberCount": 50
 }
 ```
 
@@ -87,7 +87,7 @@
 在 `events.json` 中新增項目：
 ```json
 {
-  "id": 4,  // 遞增的唯一 ID
+  "id": 4,
   "category": "工作坊",
   "date": "2025.03",
   "title": "AI 機器學習入門",
@@ -100,7 +100,7 @@
 編輯 `stats.json`：
 ```json
 {
-  "semesterFee": "600"  // 改成新的金額
+  "semesterFee": "600"
 }
 ```
 

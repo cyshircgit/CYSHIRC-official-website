@@ -1,51 +1,18 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import {
-		IconUsers,
-		IconCode,
-		IconRocket,
 		IconArrowRight,
-		IconDeviceLaptop,
-		IconUsersGroup,
-		IconSparkles,
-		IconNetwork,
 		IconChevronLeft,
 		IconChevronRight
 	} from '@tabler/icons-svelte';
+	import { EventCard, FeatureCard } from '$lib/components';
 	import eventsData from '$lib/data/events.json';
 	import featuresData from '$lib/data/features.json';
+	import { getUpcomingEvents, transformFeatures } from '$lib/utils';
+	import type { EventData, FeatureData } from '$lib/types';
 
-	const iconMap: Record<string, any> = {
-		IconUsers,
-		IconCode,
-		IconRocket,
-		IconDeviceLaptop,
-		IconUsersGroup,
-		IconSparkles,
-		IconNetwork
-	};
-
-	// 排序並取最近的 3 個活動
-	const allEvents = eventsData
-		.map((event) => ({
-			...event,
-			icon: iconMap[event.icon],
-			dateObj: new Date(event.fullDate)
-		}))
-		.sort((a, b) => {
-			const today = new Date();
-			const diffA = Math.abs(a.dateObj.getTime() - today.getTime());
-			const diffB = Math.abs(b.dateObj.getTime() - today.getTime());
-			return diffA - diffB;
-		});
-
-	// 首頁只顯示前 3 個最近的活動
-	const events = allEvents.slice(0, 3);
-
-	const features = featuresData.map((feature) => ({
-		...feature,
-		icon: iconMap[feature.icon]
-	}));
+	const events = getUpcomingEvents(eventsData as EventData[], 3);
+	const features = transformFeatures(featuresData as FeatureData[]);
 
 	let galleryImages = $state<string[]>([]);
 	let currentImageIndex = $state(0);
@@ -53,12 +20,14 @@
 
 	onMount(() => {
 		const imageModules = import.meta.glob('$lib/assets/gallery/*.{jpg,jpeg,png,webp,svg}', {
-			eager: true,
+			eager: false,
 			query: '?url',
 			import: 'default'
 		});
 
-		galleryImages = Object.values(imageModules) as string[];
+		Promise.all(Object.values(imageModules).map((loader) => loader())).then((images) => {
+			galleryImages = images as string[];
+		});
 
 		if (galleryImages.length > 1) {
 			autoplayInterval = setInterval(() => {
@@ -86,16 +55,35 @@
 	}
 </script>
 
+<svelte:head>
+	<title>CYSHIRC - 嘉義高中資訊研究社</title>
+	<meta name="description" content="探索程式設計的無限可能，與志同道合的夥伴一起成長。從零基礎到專案實戰，我們提供完整的學習路徑。" />
+	<meta name="keywords" content="嘉義高中,資訊研究社,程式設計,CYSHIRC,學生社團,程式教育" />
+	
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="CYSHIRC - 嘉義高中資訊研究社" />
+	<meta property="og:description" content="探索程式設計的無限可能，與志同道合的夥伴一起成長。" />
+	<meta property="og:image" content="/og-image.jpg" />
+	
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="CYSHIRC - 嘉義高中資訊研究社" />
+	<meta name="twitter:description" content="探索程式設計的無限可能，與志同道合的夥伴一起成長。" />
+	<meta name="twitter:image" content="/og-image.jpg" />
+</svelte:head>
+
 <div class="page">
-	<!-- Hero Section -->
 	<section class="hero">
-		<!-- Background Carousel -->
 		{#if galleryImages.length > 0}
 			<div class="hero-background">
 				<div class="carousel-images">
 					{#each galleryImages as image, index}
 						<div class="carousel-image" class:active={index === currentImageIndex}>
-							<img src={image} alt="社團活動照片 {index + 1}" />
+							<img 
+								src={image} 
+								alt="社團活動照片 {index + 1}" 
+								loading={index === 0 ? 'eager' : 'lazy'}
+								decoding="async"
+							/>
 						</div>
 					{/each}
 				</div>
@@ -124,20 +112,11 @@
 			</div>
 		</div>
 
-		<!-- Carousel Controls -->
 		{#if galleryImages.length > 1}
-			<button
-				class="carousel-btn prev"
-				onclick={prevImage}
-				aria-label="上一張照片"
-			>
+			<button class="carousel-btn prev" onclick={prevImage} aria-label="上一張照片">
 				<IconChevronLeft size={24} stroke={2} />
 			</button>
-			<button
-				class="carousel-btn next"
-				onclick={nextImage}
-				aria-label="下一張照片"
-			>
+			<button class="carousel-btn next" onclick={nextImage} aria-label="下一張照片">
 				<IconChevronRight size={24} stroke={2} />
 			</button>
 
@@ -154,7 +133,6 @@
 		{/if}
 	</section>
 
-	<!-- Events Section -->
 	<section class="events">
 		<div class="container">
 			<div class="section-header">
@@ -164,23 +142,12 @@
 
 			<div class="events-grid">
 				{#each events as event}
-					<article class="event-card">
-						<div class="event-icon">
-							<event.icon size={32} stroke={1.5} />
-						</div>
-						<div class="event-meta">
-							<span class="event-category">{event.category}</span>
-							<span class="event-date">{event.date}</span>
-						</div>
-						<h3 class="event-title">{event.title}</h3>
-						<p class="event-description">{event.description}</p>
-					</article>
+					<EventCard {event} variant="compact" />
 				{/each}
 			</div>
 		</div>
 	</section>
 
-	<!-- About Section -->
 	<section class="about">
 		<div class="container">
 			<div class="about-grid">
@@ -204,20 +171,13 @@
 
 				<div class="features-grid">
 					{#each features as feature}
-						<div class="feature-card">
-							<div class="feature-icon">
-								<feature.icon size={48} stroke={1.5} />
-							</div>
-							<h3 class="feature-title">{feature.title}</h3>
-							<p class="feature-description">{feature.description}</p>
-						</div>
+						<FeatureCard {feature} />
 					{/each}
 				</div>
 			</div>
 		</div>
 	</section>
 
-	<!-- CTA Section -->
 	<section class="cta">
 		<div class="container">
 			<div class="cta-content">
@@ -233,84 +193,16 @@
 </div>
 
 <style lang="scss">
-	$crimson-primary: #ce1a4b;
-	$crimson-dark: #a01538;
-	$crimson-light: #e63764;
-	$highlight-yellow: #d4ff00;
-	$gray-900: #0f1117;
-	$gray-800: #1a1d29;
-	$gray-700: #252936;
-	$gray-600: #32374a;
-	$gray-400: #9ca3af;
-	$gray-300: #d1d5db;
-	$transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+	@use '$lib/styles/theme' as theme;
 
 	.page {
-		background: $gray-900;
+		background: theme.$gray-900;
 		min-height: 100vh;
-	}
-
-	.container {
-		max-width: 1440px;
-		margin: 0 auto;
-		padding: 0 3.5rem;
-
-		@media (max-width: 1024px) {
-			padding: 0 2rem;
-		}
-
-		@media (max-width: 768px) {
-			padding: 0 1.5rem;
-		}
-	}
-
-	.section-label {
-		display: inline-block;
-		font-size: 0.75rem;
-		font-weight: 700;
-		letter-spacing: 0.15em;
-		text-transform: uppercase;
-		color: $gray-400;
-		margin-bottom: 1.5rem;
-	}
-
-	.section-title {
-		font-size: 3.5rem;
-		font-weight: 900;
-		line-height: 1.1;
-		letter-spacing: -0.04em;
-		color: #fff;
-		margin: 0 0 2rem;
-
-		@media (max-width: 768px) {
-			font-size: 2.5rem;
-		}
-	}
-
-	.highlight {
-		background: $highlight-yellow;
-		color: #000;
-		padding: 0.2em 0.5em;
-		border-radius: 0.35em;
-		display: inline-block;
-		line-height: 1.2;
-		font-weight: 900;
-		position: relative;
-		z-index: 10;
-		isolation: isolate;
-		transform: translateZ(0);
-		will-change: transform;
-		backface-visibility: hidden;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-		filter: none;
-		text-shadow: none;
-		box-shadow: none;
 	}
 
 	.hero {
 		padding: 8rem 0 10rem;
-		background: $gray-900;
+		background: theme.$gray-900;
 		position: relative;
 		overflow: hidden;
 		min-height: 100vh;
@@ -322,7 +214,7 @@
 			min-height: 80vh;
 		}
 
-		.hero-background {
+		&-background {
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -342,7 +234,7 @@
 					width: 100%;
 					height: 100%;
 					opacity: 0;
-					transition: opacity 1.2s $transition-smooth;
+					transition: opacity 1.2s theme.$transition-smooth;
 
 					&.active {
 						opacity: 1;
@@ -365,9 +257,8 @@
 				height: 100%;
 				background: linear-gradient(
 					135deg,
-					rgba($gray-900, 0.7) 0%,
-					rgba($gray-900, 0.7) 50%,
-					rgba($gray-900, 0.7) 100%
+					rgba(0, 0, 0, 0.65) 0%,
+					rgba(0, 0, 0, 0.65) 100%
 				);
 				z-index: 1;
 			}
@@ -378,7 +269,7 @@
 			z-index: 2;
 		}
 
-		.hero-content {
+		&-content {
 			max-width: 900px;
 			text-align: center;
 			margin: 0 auto;
@@ -393,10 +284,7 @@
 				padding: 0.5rem 1rem;
 				border-radius: 100px;
 				margin-bottom: 2.5rem;
-				background: $highlight-yellow;
-				isolation: isolate;
-				transform: translateZ(0);
-				filter: none;
+				background: theme.$highlight-yellow;
 			}
 
 			.hero-title {
@@ -406,7 +294,6 @@
 				letter-spacing: -0.045em;
 				color: #fff;
 				margin: 0 0 2rem;
-				text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 
 				@media (max-width: 1024px) {
 					font-size: 4rem;
@@ -423,7 +310,6 @@
 				color: rgba(#fff, 0.9);
 				margin: 0 0 3rem;
 				font-weight: 500;
-				text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 
 				@media (max-width: 768px) {
 					font-size: 1.125rem;
@@ -446,20 +332,19 @@
 			width: 48px;
 			height: 48px;
 			border-radius: 50%;
-			background: rgba(#fff, 0.15);
-			border: 1.5px solid rgba(#fff, 0.3);
+			background: rgba(#fff, 0.25);
+			border: 1.5px solid rgba(#fff, 0.4);
 			color: #fff;
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			cursor: pointer;
-			transition: all 0.3s $transition-smooth;
-			backdrop-filter: blur(8px);
+			transition: all 0.3s theme.$transition-smooth;
 			z-index: 3;
 
 			&:hover {
-				background: rgba($crimson-primary, 0.9);
-				border-color: $crimson-primary;
+				background: rgba(theme.$crimson-primary, 0.9);
+				border-color: theme.$crimson-primary;
 				transform: translateY(-50%) scale(1.1);
 			}
 
@@ -509,7 +394,7 @@
 				background: rgba(#fff, 0.4);
 				border: none;
 				cursor: pointer;
-				transition: all 0.3s $transition-smooth;
+				transition: all 0.3s theme.$transition-smooth;
 
 				&:hover {
 					background: rgba(#fff, 0.7);
@@ -519,7 +404,7 @@
 				&.active {
 					width: 28px;
 					border-radius: 5px;
-					background: $crimson-primary;
+					background: theme.$crimson-primary;
 				}
 
 				@media (max-width: 768px) {
@@ -534,74 +419,25 @@
 		}
 	}
 
-	.btn-primary,
 	.btn-primary-large {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		background: $crimson-primary;
-		color: #fff;
-		padding: 1rem 2rem;
-		border-radius: 100px;
-		font-weight: 700;
-		font-size: 0.9375rem;
-		letter-spacing: -0.01em;
-		transition: all 0.3s $transition-smooth;
-		border: 2px solid $crimson-primary;
-		box-shadow: 0 6px 20px rgba($crimson-primary, 0.25);
-
-		&:hover {
-			background: $crimson-light;
-			border-color: $crimson-light;
-			transform: translateY(-3px);
-			box-shadow: 0 16px 40px rgba($crimson-light, 0.5);
-		}
-
-		&:active {
-			transform: translateY(-1px);
-			box-shadow: 0 4px 12px rgba($crimson-primary, 0.3);
-		}
-	}
-
-	.btn-primary-large {
+		@include theme.btn-primary;
 		padding: 1.25rem 2.5rem;
 		font-size: 1.125rem;
 		gap: 0.75rem;
-		box-shadow: 0 8px 24px rgba($crimson-primary, 0.3);
+		box-shadow: 0 8px 24px rgba(theme.$crimson-primary, 0.3);
 
 		&:hover {
-			box-shadow: 0 20px 48px rgba($crimson-light, 0.55);
+			box-shadow: 0 20px 48px rgba(theme.$crimson-light, 0.55);
 		}
 
 		&:active {
-			box-shadow: 0 6px 16px rgba($crimson-primary, 0.35);
-		}
-	}
-
-	.btn-secondary {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		background: transparent;
-		color: #fff;
-		padding: 1rem 2rem;
-		border-radius: 100px;
-		font-weight: 700;
-		font-size: 0.9375rem;
-		letter-spacing: -0.01em;
-		border: 2px solid $gray-700;
-		transition: all 0.3s $transition-smooth;
-
-		&:hover {
-			border-color: $gray-600;
-			background: $gray-800;
-			transform: translateY(-2px);
+			box-shadow: 0 6px 16px rgba(theme.$crimson-primary, 0.35);
 		}
 	}
 
 	.events {
 		padding: 8rem 0;
-		background: $gray-800;
+		background: theme.$gray-800;
 
 		@media (max-width: 768px) {
 			padding: 5rem 0;
@@ -623,81 +459,9 @@
 		}
 	}
 
-	.event-card {
-		background: $gray-700;
-		border: 1.5px solid $gray-600;
-		border-radius: 1.5rem;
-		padding: 3rem;
-		transition: all 0.4s $transition-smooth;
-
-		&:hover {
-			border-color: $crimson-primary;
-			transform: translateY(-8px);
-			box-shadow: 0 24px 48px rgba($crimson-primary, 0.2);
-
-			.event-icon {
-				background: $crimson-primary;
-				color: #fff;
-				transform: scale(1.05) rotate(5deg);
-			}
-		}
-
-		.event-icon {
-			width: 72px;
-			height: 72px;
-			background: $gray-600;
-			border-radius: 50%;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			margin-bottom: 2rem;
-			color: #fff;
-			transition: all 0.4s $transition-smooth;
-		}
-	}
-
-	.event-meta {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-bottom: 1.5rem;
-		gap: 1rem;
-	}
-
-	.event-category {
-		font-size: 0.75rem;
-		font-weight: 700;
-		letter-spacing: 0.1em;
-		text-transform: uppercase;
-		color: $gray-400;
-	}
-
-	.event-date {
-		font-size: 0.875rem;
-		font-weight: 600;
-		color: $gray-400;
-		font-variant-numeric: tabular-nums;
-	}
-
-	.event-title {
-		font-size: 1.75rem;
-		font-weight: 800;
-		line-height: 1.2;
-		letter-spacing: -0.02em;
-		color: #fff;
-		margin: 0 0 1rem;
-	}
-
-	.event-description {
-		font-size: 1rem;
-		line-height: 1.7;
-		color: $gray-400;
-		margin: 0;
-	}
-
 	.about {
 		padding: 10rem 0;
-		background: $gray-900;
+		background: theme.$gray-900;
 
 		@media (max-width: 768px) {
 			padding: 6rem 0;
@@ -728,7 +492,7 @@
 	.about-text {
 		font-size: 1.125rem;
 		line-height: 1.8;
-		color: $gray-400;
+		color: theme.$gray-400;
 		margin: 0 0 1.5rem;
 	}
 
@@ -736,14 +500,14 @@
 		display: inline-flex;
 		align-items: center;
 		gap: 0.5rem;
-		color: $crimson-primary;
+		color: theme.$crimson-primary;
 		font-weight: 700;
 		font-size: 1rem;
 		margin-top: 1rem;
 		transition: all 0.3s ease;
 
 		&:hover {
-			color: $crimson-light;
+			color: theme.$crimson-light;
 			transform: translateX(4px);
 		}
 	}
@@ -758,52 +522,9 @@
 		}
 	}
 
-	.feature-card {
-		background: $gray-800;
-		border: 1.5px solid $gray-700;
-		border-radius: 1.25rem;
-		padding: 2.5rem;
-		transition: all 0.4s $transition-smooth;
-
-		&:hover {
-			border-color: $gray-600;
-			transform: translateY(-4px);
-			background: $gray-700;
-
-			.feature-icon {
-				transform: scale(1.1) rotate(-5deg);
-			}
-		}
-
-		.feature-icon {
-			margin-bottom: 1.5rem;
-			display: flex;
-			align-items: center;
-			justify-content: flex-start;
-			color: $crimson-primary;
-			transition: transform 0.4s $transition-smooth;
-		}
-	}
-
-	.feature-title {
-		font-size: 1.25rem;
-		font-weight: 800;
-		line-height: 1.3;
-		letter-spacing: -0.02em;
-		color: #fff;
-		margin: 0 0 0.75rem;
-	}
-
-	.feature-description {
-		font-size: 0.9375rem;
-		line-height: 1.6;
-		color: $gray-400;
-		margin: 0;
-	}
-
 	.cta {
 		padding: 10rem 0;
-		background: $gray-800;
+		background: theme.$gray-800;
 		position: relative;
 
 		&::before {
@@ -816,7 +537,7 @@
 			background: linear-gradient(
 				90deg,
 				transparent 0%,
-				rgba($crimson-primary, 0.5) 50%,
+				rgba(theme.$crimson-primary, 0.5) 50%,
 				transparent 100%
 			);
 		}
@@ -846,7 +567,7 @@
 			.cta-description {
 				font-size: 1.25rem;
 				line-height: 1.6;
-				color: $gray-400;
+				color: theme.$gray-400;
 				margin: 0 0 3rem;
 			}
 		}

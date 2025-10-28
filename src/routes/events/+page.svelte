@@ -1,41 +1,22 @@
 <script lang="ts">
-	import {
-		IconUsers,
-		IconCode,
-		IconRocket,
-		IconCalendar,
-		IconMapPin,
-		IconClock
-	} from '@tabler/icons-svelte';
+	import { IconCalendar, IconMapPin, IconClock } from '@tabler/icons-svelte';
+	import { EventCard } from '$lib/components';
 	import eventsData from '$lib/data/events.json';
+	import { getUpcomingEvents } from '$lib/utils';
+	import type { EventData } from '$lib/types';
 
-	const iconMap: Record<string, any> = {
-		IconUsers,
-		IconCode,
-		IconRocket
-	};
-
-	// 顯示所有活動，按日期排序（最近的在前）
-	const events = eventsData
-		.map((event) => ({
-			...event,
-			icon: iconMap[event.icon],
-			dateObj: new Date(event.fullDate)
-		}))
-		.sort((a, b) => {
-			const today = new Date();
-			const diffA = Math.abs(a.dateObj.getTime() - today.getTime());
-			const diffB = Math.abs(b.dateObj.getTime() - today.getTime());
-			return diffA - diffB;
-		});
+	const events = getUpcomingEvents(eventsData as EventData[], eventsData.length);
 </script>
 
 <svelte:head>
 	<title>活動資訊 - CYSHIRC 嘉義高中資訊研究社</title>
+	<meta name="description" content="探索我們精心規劃的活動與課程，從技術學習到社群交流，找到最適合你的成長路徑。" />
+	<meta property="og:title" content="活動資訊 - CYSHIRC" />
+	<meta property="og:description" content="探索我們精心規劃的活動與課程，從技術學習到社群交流。" />
 </svelte:head>
 
+
 <div class="page">
-	<!-- Hero Section -->
 	<section class="hero">
 		<div class="container">
 			<div class="hero-content">
@@ -49,7 +30,6 @@
 		</div>
 	</section>
 
-	<!-- Events List -->
 	<section class="events-section">
 		<div class="container">
 			<div class="events-grid">

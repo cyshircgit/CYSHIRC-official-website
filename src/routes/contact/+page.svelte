@@ -35,6 +35,13 @@
 	];
 </script>
 
+<svelte:head>
+	<title>聯絡資訊 - CYSHIRC 嘉義高中資訊研究社</title>
+	<meta name="description" content="有任何問題或想加入我們？歡迎隨時與我們聯繫。透過 Email、Instagram、GitHub 或 Discord 與我們交流。" />
+	<meta property="og:title" content="聯絡資訊 - CYSHIRC" />
+	<meta property="og:description" content="歡迎隨時與我們聯繫，無論是想加入社團還是詢問活動資訊。" />
+</svelte:head>
+
 <div class="page">
 	<section class="contact-hero">
 		<div class="container">

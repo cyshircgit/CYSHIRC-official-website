@@ -1,0 +1,109 @@
+$crimson-primary: #ce1a4b;
+$crimson-dark: #a01538;
+$crimson-light: #e63764;
+$highlight-yellow: #d4ff00;
+$gray-900: #0f1117;
+$gray-800: #1a1d29;
+$gray-700: #252936;
+$gray-600: #32374a;
+$gray-400: #9ca3af;
+$gray-300: #d1d5db;
+$transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+@mixin container {
+	max-width: 1440px;
+	margin: 0 auto;
+	padding: 0 3.5rem;
+
+	@media (max-width: 1024px) {
+		padding: 0 2rem;
+	}
+
+	@media (max-width: 768px) {
+		padding: 0 1.5rem;
+	}
+}
+
+@mixin section-label {
+	display: inline-block;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.15em;
+	text-transform: uppercase;
+	color: $gray-400;
+	margin-bottom: 1.5rem;
+}
+
+@mixin section-title($base-size: 3.5rem, $mobile-size: 2.5rem) {
+	font-size: $base-size;
+	font-weight: 900;
+	line-height: 1.1;
+	letter-spacing: -0.04em;
+	color: #fff;
+	margin: 0 0 2rem;
+
+	@media (max-width: 768px) {
+		font-size: $mobile-size;
+	}
+}
+
+@mixin highlight {
+	background: $highlight-yellow;
+	color: #000;
+	padding: 0.2em 0.5em;
+	border-radius: 0.35em;
+	display: inline-block;
+	line-height: 1.2;
+	font-weight: 900;
+	position: relative;
+	z-index: 1;
+}
+
+@mixin btn-primary {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	background: $crimson-primary;
+	color: #fff;
+	padding: 1rem 2rem;
+	border-radius: 100px;
+	font-weight: 700;
+	font-size: 0.9375rem;
+	letter-spacing: -0.01em;
+	transition: all 0.3s $transition-smooth;
+	border: 2px solid $crimson-primary;
+	box-shadow: 0 6px 20px rgba($crimson-primary, 0.25);
+
+	&:hover {
+		background: $crimson-light;
+		border-color: $crimson-light;
+		transform: translateY(-3px);
+		box-shadow: 0 16px 40px rgba($crimson-light, 0.5);
+	}
+
+	&:active {
+		transform: translateY(-1px);
+		box-shadow: 0 4px 12px rgba($crimson-primary, 0.3);
+	}
+}
+
+@mixin btn-secondary {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	background: transparent;
+	color: #fff;
+	padding: 1rem 2rem;
+	border-radius: 100px;
+	font-weight: 700;
+	font-size: 0.9375rem;
+	letter-spacing: -0.01em;
+	border: 2px solid $gray-700;
+	transition: all 0.3s $transition-smooth;
+
+	&:hover {
+		border-color: $gray-600;
+		background: $gray-800;
+		transform: translateY(-2px);
+	}
+}
