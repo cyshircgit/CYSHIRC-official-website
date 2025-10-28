@@ -48,10 +48,12 @@
 				<a href="/contact" class="nav-link">聯絡資訊</a>
 			</nav>
 
-			<!-- Hamburger Button (Mobile) -->
+		<!-- Mobile: Show both Hamburger and CTA Button -->
+		<div class="md:hidden flex items-center gap-3">
+			<!-- Hamburger Button -->
 			<button
 				onclick={toggleMobileMenu}
-				class="md:hidden text-white bg-transparent p-0 border-0 cursor-pointer"
+				class="text-white bg-transparent p-0 border-0 cursor-pointer"
 				aria-label="Toggle menu"
 			>
 				{#if mobileMenuOpen}
@@ -61,12 +63,20 @@
 				{/if}
 			</button>
 
-			<!-- CTA Button -->
+			<!-- Mobile CTA Button (活動) -->
 			<a
-				href={isMobile ? '/events' : '/about'}
-				class="cta-button max-md:hidden inline-flex items-center gap-2 bg-white text-crimson px-6 py-3 rounded-full font-bold text-sm tracking-wide uppercase transition-all duration-300 border-2 border-white hover:bg-transparent hover:text-white hover:shadow-lg"
+				href="/events"
+				class="cta-button inline-flex items-center gap-2 bg-white text-crimson px-5 py-2.5 rounded-full font-bold text-sm tracking-wide uppercase transition-all duration-300 border-2 border-white hover:bg-transparent hover:text-white hover:shadow-lg"
 			>
-				{isMobile ? '活動' : '關於我們'}
+				活動
+				<IconArrowRight size={18} stroke={2.5} class="transition-transform duration-300" />
+			</a>
+		</div>			<!-- Desktop CTA Button (關於我們) -->
+			<a
+				href="/about"
+				class="cta-button max-md:!hidden inline-flex items-center gap-2 bg-white text-crimson px-6 py-3 rounded-full font-bold text-sm tracking-wide uppercase transition-all duration-300 border-2 border-white hover:bg-transparent hover:text-white hover:shadow-lg"
+			>
+				關於我們
 				<IconArrowRight size={18} stroke={2.5} class="transition-transform duration-300" />
 			</a>
 		</div>
@@ -77,10 +87,18 @@
 {#if mobileMenuOpen}
 	<div class="mobile-menu animate-slideDown">
 		<nav class="mobile-nav">
-			<a href="/" class="mobile-nav-link" onclick={closeMobileMenu}>首頁</a>
-			<a href="/about" class="mobile-nav-link" onclick={closeMobileMenu}>關於我們</a>
-			<a href="/events" class="mobile-nav-link" onclick={closeMobileMenu}>活動資訊</a>
-			<a href="/contact" class="mobile-nav-link" onclick={closeMobileMenu}>聯絡資訊</a>
+			<a href="/" class="mobile-nav-link" onclick={closeMobileMenu}>
+				<span>首頁</span>
+				<IconArrowRight size={20} stroke={2.5} />
+			</a>
+			<a href="/about" class="mobile-nav-link" onclick={closeMobileMenu}>
+				<span>關於我們</span>
+				<IconArrowRight size={20} stroke={2.5} />
+			</a>
+			<a href="/contact" class="mobile-nav-link" onclick={closeMobileMenu}>
+				<span>聯絡資訊</span>
+				<IconArrowRight size={20} stroke={2.5} />
+			</a>
 		</nav>
 	</div>
 {/if}
@@ -182,17 +200,28 @@
 		font-weight: 600;
 		font-size: 1rem;
 		padding: 1rem 1.5rem;
-		display: block;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
 		transition: all 0.2s ease;
 		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
 		&:hover {
 			background: rgba(255, 255, 255, 0.1);
 			padding-left: 2rem;
+
+			:global(svg) {
+				transform: translateX(4px);
+			}
 		}
 
 		&:last-child {
 			border-bottom: none;
+		}
+
+		:global(svg) {
+			transition: transform 0.3s ease;
+			flex-shrink: 0;
 		}
 	}
 

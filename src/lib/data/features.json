@@ -1,0 +1,26 @@
+[
+	{
+		"id": 1,
+		"title": "技術學習",
+		"description": "系統化程式課程與工作坊",
+		"icon": "IconDeviceLaptop"
+	},
+	{
+		"id": 2,
+		"title": "團隊協作",
+		"description": "專案實作與團隊開發經驗",
+		"icon": "IconUsersGroup"
+	},
+	{
+		"id": 3,
+		"title": "創新實踐",
+		"description": "黑客松與競賽參與機會",
+		"icon": "IconSparkles"
+	},
+	{
+		"id": 4,
+		"title": "社群連結",
+		"description": "連結業界資源與校友網絡",
+		"icon": "IconNetwork"
+	}
+]

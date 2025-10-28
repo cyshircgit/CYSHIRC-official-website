@@ -1,0 +1,56 @@
+[
+	{
+		"id": 1,
+		"category": "社群活動",
+		"date": "2024.11.15",
+		"fullDate": "2024-11-15",
+		"title": "新生迎新茶會",
+		"description": "歡迎新成員加入 CYSHIRC 大家庭，認識志同道合的夥伴，一起探索程式設計的無限可能。",
+		"icon": "IconUsers"
+	},
+	{
+		"id": 2,
+		"category": "技術課程",
+		"date": "2024.12.10",
+		"fullDate": "2024-12-10",
+		"title": "Web 開發工作坊",
+		"description": "學習現代化網頁開發技術，從 HTML/CSS 到 React、Vue 框架，打造你的第一個作品集網站。",
+		"icon": "IconCode"
+	},
+	{
+		"id": 3,
+		"category": "競賽活動",
+		"date": "2025.01.20",
+		"fullDate": "2025-01-20",
+		"title": "校內黑客松大賽",
+		"description": "48 小時極限開發挑戰，與團隊協作創造創新專案，爭取豐厚獎金與實習機會。",
+		"icon": "IconRocket"
+	},
+	{
+		"id": 4,
+		"category": "技術課程",
+		"date": "2025.02.15",
+		"fullDate": "2025-02-15",
+		"title": "Python 資料科學入門",
+		"description": "學習 Python 數據分析、視覺化技術，掌握 NumPy、Pandas 等熱門函式庫。",
+		"icon": "IconCode"
+	},
+	{
+		"id": 5,
+		"category": "社群活動",
+		"date": "2025.03.10",
+		"fullDate": "2025-03-10",
+		"title": "業界講座：軟體工程師的一天",
+		"description": "邀請業界資深工程師分享工作經驗，了解真實的軟體開發職場生態。",
+		"icon": "IconUsers"
+	},
+	{
+		"id": 6,
+		"category": "競賽活動",
+		"date": "2025.04.05",
+		"fullDate": "2025-04-05",
+		"title": "APCS 模擬考試",
+		"description": "全真模擬 APCS 檢定考試，熟悉考試流程與題型，為正式考試做好準備。",
+		"icon": "IconRocket"
+	}
+]

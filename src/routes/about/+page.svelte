@@ -10,6 +10,14 @@
 		IconHeartHandshake,
 		IconCurrencyDollar
 	} from '@tabler/icons-svelte';
+	import statsData from '$lib/data/stats.json';
+
+	const stats = [
+		{ number: statsData.memberCount.toString(), label: '社員人數' },
+		{ number: '2', label: '專業課程' },
+		{ number: '2+', label: '技術領域' },
+		{ number: statsData.semesterFee, label: '學期社費' }
+	];
 
 	const courses = [
 		{
@@ -50,13 +58,6 @@
 			title: '多元技術領域',
 			description: '從程式開發到硬體實作，涵蓋完整技術棧'
 		}
-	];
-
-	const stats = [
-		{ number: '36', label: '社員人數' },
-		{ number: '2', label: '專業課程' },
-		{ number: '2+', label: '技術領域' },
-		{ number: '800', label: '學期社費' }
 	];
 </script>
 

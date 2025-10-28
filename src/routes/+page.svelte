@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import {
 		IconUsers,
 		IconCode,
@@ -7,44 +8,101 @@
 		IconDeviceLaptop,
 		IconUsersGroup,
 		IconSparkles,
-		IconNetwork
+		IconNetwork,
+		IconChevronLeft,
+		IconChevronRight
 	} from '@tabler/icons-svelte';
+	import eventsData from '$lib/data/events.json';
+	import featuresData from '$lib/data/features.json';
 
-	const events = [
-		{
-			category: '社群活動',
-			date: '2024.11',
-			title: '新生迎新茶會',
-			description: '歡迎新成員加入 CYSHIRC 大家庭，認識志同道合的夥伴，一起探索程式設計的無限可能。',
-			icon: IconUsers
-		},
-		{
-			category: '技術課程',
-			date: '2024.12',
-			title: 'Web 開發工作坊',
-			description: '學習現代化網頁開發技術，從 HTML/CSS 到 React、Vue 框架，打造你的第一個作品集網站。',
-			icon: IconCode
-		},
-		{
-			category: '競賽活動',
-			date: '2025.01',
-			title: '校內黑客松大賽',
-			description: '48 小時極限開發挑戰，與團隊協作創造創新專案，爭取豐厚獎金與實習機會。',
-			icon: IconRocket
+	const iconMap: Record<string, any> = {
+		IconUsers,
+		IconCode,
+		IconRocket,
+		IconDeviceLaptop,
+		IconUsersGroup,
+		IconSparkles,
+		IconNetwork
+	};
+
+	// 排序並取最近的 3 個活動
+	const allEvents = eventsData
+		.map((event) => ({
+			...event,
+			icon: iconMap[event.icon],
+			dateObj: new Date(event.fullDate)
+		}))
+		.sort((a, b) => {
+			const today = new Date();
+			const diffA = Math.abs(a.dateObj.getTime() - today.getTime());
+			const diffB = Math.abs(b.dateObj.getTime() - today.getTime());
+			return diffA - diffB;
+		});
+
+	// 首頁只顯示前 3 個最近的活動
+	const events = allEvents.slice(0, 3);
+
+	const features = featuresData.map((feature) => ({
+		...feature,
+		icon: iconMap[feature.icon]
+	}));
+
+	let galleryImages = $state<string[]>([]);
+	let currentImageIndex = $state(0);
+	let autoplayInterval: ReturnType<typeof setInterval> | null = null;
+
+	onMount(() => {
+		const imageModules = import.meta.glob('$lib/assets/gallery/*.{jpg,jpeg,png,webp,svg}', {
+			eager: true,
+			query: '?url',
+			import: 'default'
+		});
+
+		galleryImages = Object.values(imageModules) as string[];
+
+		if (galleryImages.length > 1) {
+			autoplayInterval = setInterval(() => {
+				nextImage();
+			}, 5000);
 		}
-	];
 
-	const features = [
-		{ icon: IconDeviceLaptop, title: '技術學習', description: '系統化程式課程與工作坊' },
-		{ icon: IconUsersGroup, title: '團隊協作', description: '專案實作與團隊開發經驗' },
-		{ icon: IconSparkles, title: '創新實踐', description: '黑客松與競賽參與機會' },
-		{ icon: IconNetwork, title: '社群連結', description: '連結業界資源與校友網絡' }
-	];
+		return () => {
+			if (autoplayInterval) {
+				clearInterval(autoplayInterval);
+			}
+		};
+	});
+
+	function nextImage() {
+		currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+	}
+
+	function prevImage() {
+		currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+	}
+
+	function goToImage(index: number) {
+		currentImageIndex = index;
+	}
 </script>
 
 <div class="page">
 	<!-- Hero Section -->
 	<section class="hero">
+		<!-- Background Carousel -->
+		{#if galleryImages.length > 0}
+			<div class="hero-background">
+				<div class="carousel-images">
+					{#each galleryImages as image, index}
+						<div class="carousel-image" class:active={index === currentImageIndex}>
+							<img src={image} alt="社團活動照片 {index + 1}" />
+						</div>
+					{/each}
+				</div>
+				<div class="hero-overlay"></div>
+			</div>
+		{/if}
+
 		<div class="container">
 			<div class="hero-content">
 				<div class="hero-badge">CHIAYI SENIOR HIGH SCHOOL</div>
@@ -65,6 +123,35 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- Carousel Controls -->
+		{#if galleryImages.length > 1}
+			<button
+				class="carousel-btn prev"
+				onclick={prevImage}
+				aria-label="上一張照片"
+			>
+				<IconChevronLeft size={24} stroke={2} />
+			</button>
+			<button
+				class="carousel-btn next"
+				onclick={nextImage}
+				aria-label="下一張照片"
+			>
+				<IconChevronRight size={24} stroke={2} />
+			</button>
+
+			<div class="carousel-indicators">
+				{#each galleryImages as _, index}
+					<button
+						class="indicator"
+						class:active={index === currentImageIndex}
+						onclick={() => goToImage(index)}
+						aria-label="前往照片 {index + 1}"
+					></button>
+				{/each}
+			</div>
+		{/if}
 	</section>
 
 	<!-- Events Section -->
@@ -79,7 +166,7 @@
 				{#each events as event}
 					<article class="event-card">
 						<div class="event-icon">
-							<svelte:component this={event.icon} size={32} stroke={1.5} />
+							<event.icon size={32} stroke={1.5} />
 						</div>
 						<div class="event-meta">
 							<span class="event-category">{event.category}</span>
@@ -119,7 +206,7 @@
 					{#each features as feature}
 						<div class="feature-card">
 							<div class="feature-icon">
-								<svelte:component this={feature.icon} size={48} stroke={1.5} />
+								<feature.icon size={48} stroke={1.5} />
 							</div>
 							<h3 class="feature-title">{feature.title}</h3>
 							<p class="feature-description">{feature.description}</p>
@@ -202,20 +289,93 @@
 
 	.highlight {
 		background: $highlight-yellow;
-		color: $gray-900;
-		padding: 0.1em 0.35em;
-		border-radius: 0.25em;
+		color: #000;
+		padding: 0.2em 0.5em;
+		border-radius: 0.35em;
 		display: inline-block;
-		line-height: 1.3;
+		line-height: 1.2;
+		font-weight: 900;
+		position: relative;
+		z-index: 10;
+		isolation: isolate;
+		transform: translateZ(0);
+		will-change: transform;
+		backface-visibility: hidden;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		filter: none;
+		text-shadow: none;
+		box-shadow: none;
 	}
 
 	.hero {
 		padding: 8rem 0 10rem;
 		background: $gray-900;
 		position: relative;
+		overflow: hidden;
+		min-height: 100vh;
+		display: flex;
+		align-items: center;
 
 		@media (max-width: 768px) {
 			padding: 5rem 0 6rem;
+			min-height: 80vh;
+		}
+
+		.hero-background {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 0;
+
+			.carousel-images {
+				position: relative;
+				width: 100%;
+				height: 100%;
+
+				.carousel-image {
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+					opacity: 0;
+					transition: opacity 1.2s $transition-smooth;
+
+					&.active {
+						opacity: 1;
+					}
+
+					img {
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+						display: block;
+					}
+				}
+			}
+
+			.hero-overlay {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: linear-gradient(
+					135deg,
+					rgba($gray-900, 0.7) 0%,
+					rgba($gray-900, 0.7) 50%,
+					rgba($gray-900, 0.7) 100%
+				);
+				z-index: 1;
+			}
+		}
+
+		.container {
+			position: relative;
+			z-index: 2;
 		}
 
 		.hero-content {
@@ -229,11 +389,14 @@
 				font-weight: 700;
 				letter-spacing: 0.15em;
 				text-transform: uppercase;
-				color: $gray-400;
+				color: #000;
 				padding: 0.5rem 1rem;
-				border: 1.5px solid $gray-700;
 				border-radius: 100px;
 				margin-bottom: 2.5rem;
+				background: $highlight-yellow;
+				isolation: isolate;
+				transform: translateZ(0);
+				filter: none;
 			}
 
 			.hero-title {
@@ -243,6 +406,7 @@
 				letter-spacing: -0.045em;
 				color: #fff;
 				margin: 0 0 2rem;
+				text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 
 				@media (max-width: 1024px) {
 					font-size: 4rem;
@@ -256,9 +420,10 @@
 			.hero-subtitle {
 				font-size: 1.25rem;
 				line-height: 1.7;
-				color: $gray-400;
+				color: rgba(#fff, 0.9);
 				margin: 0 0 3rem;
 				font-weight: 500;
+				text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 
 				@media (max-width: 768px) {
 					font-size: 1.125rem;
@@ -271,6 +436,100 @@
 				justify-content: center;
 				align-items: center;
 				flex-wrap: wrap;
+			}
+		}
+
+		.carousel-btn {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 48px;
+			height: 48px;
+			border-radius: 50%;
+			background: rgba(#fff, 0.15);
+			border: 1.5px solid rgba(#fff, 0.3);
+			color: #fff;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			transition: all 0.3s $transition-smooth;
+			backdrop-filter: blur(8px);
+			z-index: 3;
+
+			&:hover {
+				background: rgba($crimson-primary, 0.9);
+				border-color: $crimson-primary;
+				transform: translateY(-50%) scale(1.1);
+			}
+
+			&.prev {
+				left: 2rem;
+
+				@media (max-width: 768px) {
+					left: 1rem;
+				}
+			}
+
+			&.next {
+				right: 2rem;
+
+				@media (max-width: 768px) {
+					right: 1rem;
+				}
+			}
+
+			@media (max-width: 768px) {
+				width: 40px;
+				height: 40px;
+			}
+
+			:global(svg) {
+				flex-shrink: 0;
+			}
+		}
+
+		.carousel-indicators {
+			position: absolute;
+			bottom: 3rem;
+			left: 50%;
+			transform: translateX(-50%);
+			display: flex;
+			gap: 0.75rem;
+			z-index: 3;
+
+			@media (max-width: 768px) {
+				bottom: 2rem;
+			}
+
+			.indicator {
+				width: 10px;
+				height: 10px;
+				border-radius: 50%;
+				background: rgba(#fff, 0.4);
+				border: none;
+				cursor: pointer;
+				transition: all 0.3s $transition-smooth;
+
+				&:hover {
+					background: rgba(#fff, 0.7);
+					transform: scale(1.2);
+				}
+
+				&.active {
+					width: 28px;
+					border-radius: 5px;
+					background: $crimson-primary;
+				}
+
+				@media (max-width: 768px) {
+					width: 8px;
+					height: 8px;
+
+					&.active {
+						width: 24px;
+					}
+				}
 			}
 		}
 	}
@@ -362,78 +621,78 @@
 				grid-template-columns: 1fr;
 			}
 		}
+	}
 
-		.event-card {
-			background: $gray-700;
-			border: 1.5px solid $gray-600;
-			border-radius: 1.5rem;
-			padding: 3rem;
-			transition: all 0.4s $transition-smooth;
+	.event-card {
+		background: $gray-700;
+		border: 1.5px solid $gray-600;
+		border-radius: 1.5rem;
+		padding: 3rem;
+		transition: all 0.4s $transition-smooth;
 
-			&:hover {
-				border-color: $crimson-primary;
-				transform: translateY(-8px);
-				box-shadow: 0 24px 48px rgba($crimson-primary, 0.2);
-
-				.event-icon {
-					background: $crimson-primary;
-					color: #fff;
-					transform: scale(1.05) rotate(5deg);
-				}
-			}
+		&:hover {
+			border-color: $crimson-primary;
+			transform: translateY(-8px);
+			box-shadow: 0 24px 48px rgba($crimson-primary, 0.2);
 
 			.event-icon {
-				width: 72px;
-				height: 72px;
-				background: $gray-600;
-				border-radius: 50%;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				margin-bottom: 2rem;
+				background: $crimson-primary;
 				color: #fff;
-				transition: all 0.4s $transition-smooth;
-			}
-
-			.event-meta {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-bottom: 1.5rem;
-				gap: 1rem;
-
-				.event-category {
-					font-size: 0.75rem;
-					font-weight: 700;
-					letter-spacing: 0.1em;
-					text-transform: uppercase;
-					color: $gray-400;
-				}
-
-				.event-date {
-					font-size: 0.875rem;
-					font-weight: 600;
-					color: $gray-400;
-					font-variant-numeric: tabular-nums;
-				}
-			}
-
-			.event-title {
-				font-size: 1.75rem;
-				font-weight: 800;
-				line-height: 1.2;
-				letter-spacing: -0.02em;
-				color: #fff;
-				margin: 0 0 1rem;
-			}
-
-			.event-description {
-				font-size: 1rem;
-				line-height: 1.7;
-				color: $gray-400;
-				margin: 0;
+				transform: scale(1.05) rotate(5deg);
 			}
 		}
+
+		.event-icon {
+			width: 72px;
+			height: 72px;
+			background: $gray-600;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-bottom: 2rem;
+			color: #fff;
+			transition: all 0.4s $transition-smooth;
+		}
+	}
+
+	.event-meta {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 1.5rem;
+		gap: 1rem;
+	}
+
+	.event-category {
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: $gray-400;
+	}
+
+	.event-date {
+		font-size: 0.875rem;
+		font-weight: 600;
+		color: $gray-400;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.event-title {
+		font-size: 1.75rem;
+		font-weight: 800;
+		line-height: 1.2;
+		letter-spacing: -0.02em;
+		color: #fff;
+		margin: 0 0 1rem;
+	}
+
+	.event-description {
+		font-size: 1rem;
+		line-height: 1.7;
+		color: $gray-400;
+		margin: 0;
 	}
 
 	.about {
@@ -443,103 +702,103 @@
 		@media (max-width: 768px) {
 			padding: 6rem 0;
 		}
+	}
 
-		.about-grid {
-			display: grid;
-			grid-template-columns: 5fr 7fr;
-			gap: 6rem;
-			align-items: start;
+	.about-grid {
+		display: grid;
+		grid-template-columns: 5fr 7fr;
+		gap: 6rem;
+		align-items: start;
 
-			@media (max-width: 1024px) {
-				grid-template-columns: 1fr;
-				gap: 4rem;
-			}
+		@media (max-width: 1024px) {
+			grid-template-columns: 1fr;
+			gap: 4rem;
 		}
+	}
 
-		.about-content {
-			position: sticky;
-			top: 8rem;
+	.about-content {
+		position: sticky;
+		top: 8rem;
 
-			@media (max-width: 1024px) {
-				position: static;
-			}
-
-			.about-text {
-				font-size: 1.125rem;
-				line-height: 1.8;
-				color: $gray-400;
-				margin: 0 0 1.5rem;
-			}
-
-			.text-link {
-				display: inline-flex;
-				align-items: center;
-				gap: 0.5rem;
-				color: $crimson-primary;
-				font-weight: 700;
-				font-size: 1rem;
-				margin-top: 1rem;
-				transition: all 0.3s ease;
-
-				&:hover {
-					color: $crimson-light;
-					transform: translateX(4px);
-				}
-			}
+		@media (max-width: 1024px) {
+			position: static;
 		}
+	}
 
-		.features-grid {
-			display: grid;
-			grid-template-columns: repeat(2, 1fr);
-			gap: 2rem;
+	.about-text {
+		font-size: 1.125rem;
+		line-height: 1.8;
+		color: $gray-400;
+		margin: 0 0 1.5rem;
+	}
 
-			@media (max-width: 640px) {
-				grid-template-columns: 1fr;
-			}
+	.text-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: $crimson-primary;
+		font-weight: 700;
+		font-size: 1rem;
+		margin-top: 1rem;
+		transition: all 0.3s ease;
+
+		&:hover {
+			color: $crimson-light;
+			transform: translateX(4px);
 		}
+	}
 
-		.feature-card {
-			background: $gray-800;
-			border: 1.5px solid $gray-700;
-			border-radius: 1.25rem;
-			padding: 2.5rem;
-			transition: all 0.4s $transition-smooth;
+	.features-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 2rem;
 
-			&:hover {
-				border-color: $gray-600;
-				transform: translateY(-4px);
-				background: $gray-700;
+		@media (max-width: 640px) {
+			grid-template-columns: 1fr;
+		}
+	}
 
-				.feature-icon {
-					transform: scale(1.1) rotate(-5deg);
-				}
-			}
+	.feature-card {
+		background: $gray-800;
+		border: 1.5px solid $gray-700;
+		border-radius: 1.25rem;
+		padding: 2.5rem;
+		transition: all 0.4s $transition-smooth;
+
+		&:hover {
+			border-color: $gray-600;
+			transform: translateY(-4px);
+			background: $gray-700;
 
 			.feature-icon {
-				margin-bottom: 1.5rem;
-				display: flex;
-				align-items: center;
-				justify-content: flex-start;
-				color: $crimson-primary;
-				transition: transform 0.4s $transition-smooth;
-			}
-
-			.feature-title {
-				font-size: 1.25rem;
-				font-weight: 800;
-				line-height: 1.3;
-				letter-spacing: -0.02em;
-				color: #fff;
-				margin: 0 0 0.75rem;
-			}
-
-			.feature-description {
-				font-size: 0.9375rem;
-				line-height: 1.6;
-				color: $gray-400;
-				margin: 0;
+				transform: scale(1.1) rotate(-5deg);
 			}
 		}
+
+		.feature-icon {
+			margin-bottom: 1.5rem;
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			color: $crimson-primary;
+			transition: transform 0.4s $transition-smooth;
+		}
+	}
+
+	.feature-title {
+		font-size: 1.25rem;
+		font-weight: 800;
+		line-height: 1.3;
+		letter-spacing: -0.02em;
+		color: #fff;
+		margin: 0 0 0.75rem;
+	}
+
+	.feature-description {
+		font-size: 0.9375rem;
+		line-height: 1.6;
+		color: $gray-400;
+		margin: 0;
 	}
 
 	.cta {
