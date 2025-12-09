@@ -6,7 +6,7 @@
 	};
 
 	let { feature }: Props = $props();
-	
+
 	const Icon = feature.icon;
 </script>
 
@@ -46,7 +46,9 @@
 		align-items: center;
 		justify-content: flex-start;
 		color: theme.$crimson-primary;
-		transition: transform 0.4s theme.$transition-smooth, color 0.4s theme.$transition-smooth;
+		transition:
+			transform 0.4s theme.$transition-smooth,
+			color 0.4s theme.$transition-smooth;
 	}
 
 	.feature-title {

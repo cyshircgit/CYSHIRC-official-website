@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { IconCalendar, IconMapPin, IconClock } from '@tabler/icons-svelte';
-	import { EventCard } from '$lib/components';
+	import { IconCalendar } from '@tabler/icons-svelte';
 	import eventsData from '$lib/data/events.json';
 	import { getUpcomingEvents } from '$lib/utils';
 	import type { EventData } from '$lib/types';
@@ -10,11 +9,13 @@
 
 <svelte:head>
 	<title>活動資訊 - CYSHIRC 嘉義高中資訊研究社</title>
-	<meta name="description" content="探索我們精心規劃的活動與課程，從技術學習到社群交流，找到最適合你的成長路徑。" />
+	<meta
+		name="description"
+		content="探索我們精心規劃的活動與課程，從技術學習到社群交流，找到最適合你的成長路徑。"
+	/>
 	<meta property="og:title" content="活動資訊 - CYSHIRC" />
 	<meta property="og:description" content="探索我們精心規劃的活動與課程，從技術學習到社群交流。" />
 </svelte:head>
-
 
 <div class="page">
 	<section class="hero">
@@ -33,7 +34,7 @@
 	<section class="events-section">
 		<div class="container">
 			<div class="events-grid">
-				{#each events as event}
+				{#each events as event (event.id)}
 					<article class="event-card">
 						<div class="event-header">
 							<div class="event-icon">

@@ -5,70 +5,78 @@
 ## 📁 文件結構
 
 ### `stats.json`
+
 網站統計數據，用於首頁和關於頁面。
 
 ```json
 {
-  "memberCount": 45,
-  "currentClass": "116級",
-  "semesterFee": "500",
-  "foundedYear": "2010"
+	"memberCount": 45,
+	"currentClass": "116級",
+	"semesterFee": "500",
+	"foundedYear": "2010"
 }
 ```
 
 **使用位置：**
+
 - `/src/routes/about/+page.svelte` - 關於頁面的統計區塊
 
 ---
 
 ### `events.json`
+
 活動列表，包含所有近期活動資訊。
 
 ```json
 [
-  {
-    "id": 1,
-    "category": "社群活動",
-    "date": "2024.11",
-    "title": "新生迎新茶會",
-    "description": "活動描述...",
-    "icon": "IconUsers"
-  }
+	{
+		"id": 1,
+		"category": "社群活動",
+		"date": "2024.11",
+		"title": "新生迎新茶會",
+		"description": "活動描述...",
+		"icon": "IconUsers"
+	}
 ]
 ```
 
 **Icon 對應表：**
+
 - `IconUsers` - 社群活動
 - `IconCode` - 技術課程
 - `IconRocket` - 競賽活動
 
 **使用位置：**
+
 - `/src/routes/+page.svelte` - 首頁活動預覽
 - `/src/routes/events/+page.svelte` - 活動列表頁面
 
 ---
 
 ### `features.json`
+
 社團特色功能列表。
 
 ```json
 [
-  {
-    "id": 1,
-    "title": "技術學習",
-    "description": "系統化程式課程與工作坊",
-    "icon": "IconDeviceLaptop"
-  }
+	{
+		"id": 1,
+		"title": "技術學習",
+		"description": "系統化程式課程與工作坊",
+		"icon": "IconDeviceLaptop"
+	}
 ]
 ```
 
 **Icon 對應表：**
+
 - `IconDeviceLaptop` - 技術學習
 - `IconUsersGroup` - 團隊協作
 - `IconSparkles` - 創新實踐
 - `IconNetwork` - 社群連結
 
 **使用位置：**
+
 - `/src/routes/+page.svelte` - 首頁特色區塊
 
 ---
@@ -76,31 +84,37 @@
 ## 🔧 如何更新數據
 
 ### 更新社員人數
+
 編輯 `stats.json`：
+
 ```json
 {
-  "memberCount": 50
+	"memberCount": 50
 }
 ```
 
 ### 新增活動
+
 在 `events.json` 中新增項目：
+
 ```json
 {
-  "id": 4,
-  "category": "工作坊",
-  "date": "2025.03",
-  "title": "AI 機器學習入門",
-  "description": "學習基礎機器學習概念...",
-  "icon": "IconCode"
+	"id": 4,
+	"category": "工作坊",
+	"date": "2025.03",
+	"title": "AI 機器學習入門",
+	"description": "學習基礎機器學習概念...",
+	"icon": "IconCode"
 }
 ```
 
 ### 修改學期社費
+
 編輯 `stats.json`：
+
 ```json
 {
-  "semesterFee": "600"
+	"semesterFee": "600"
 }
 ```
 
@@ -118,6 +132,7 @@
 ## 🚀 可用的 Icons
 
 來自 `@tabler/icons-svelte`：
+
 - `IconUsers` - 用戶/社群
 - `IconCode` - 程式碼
 - `IconRocket` - 火箭/競賽

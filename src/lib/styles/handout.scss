@@ -1,0 +1,207 @@
+@use 'theme' as theme;
+@use 'sass:color';
+
+.handout-container {
+	@include theme.container;
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+
+	.handout-title {
+		@include theme.section-title(2.5rem, 2rem);
+		color: #fff;
+		margin-bottom: 2rem;
+	}
+
+	.handout-content {
+		font-size: 1.125rem;
+		line-height: 1.75;
+		color: #fff;
+
+		:global(h1) {
+			font-size: 2rem;
+			font-weight: 700;
+			margin: 2.5rem 0 1rem;
+			padding-bottom: 0.5rem;
+			border-bottom: 2px solid theme.$gray-300;
+		}
+
+		:global(h2) {
+			font-size: 1.75rem;
+			font-weight: 600;
+			margin: 2rem 0 1rem;
+			color: theme.$crimson-primary;
+		}
+
+		:global(h3) {
+			font-size: 1.5rem;
+			font-weight: 600;
+			margin: 1.75rem 0 0.75rem;
+			color: theme.$crimson-dark;
+		}
+
+		:global(h4) {
+			font-size: 1.25rem;
+			font-weight: 600;
+			margin: 1.5rem 0 0.75rem;
+			color: #fff;
+		}
+
+		:global(p) {
+			margin: 1rem 0;
+		}
+
+		:global(ul),
+		:global(ol) {
+			margin: 1rem 0;
+			padding-left: 2rem;
+
+			:global(li) {
+				margin: 0.5rem 0;
+			}
+		}
+
+		:global(ul) {
+			list-style-type: disc;
+
+			:global(ul) {
+				list-style-type: circle;
+			}
+		}
+
+		:global(ol) {
+			list-style-type: decimal;
+		}
+
+		:global(a) {
+			color: theme.$crimson-primary;
+			text-decoration: underline;
+			transition: color 0.3s theme.$transition-smooth;
+
+			&:hover {
+				color: theme.$crimson-light;
+			}
+		}
+
+		:global(mark.theme-highlight) {
+			@include theme.highlight;
+		}
+
+		:global(mark.highlight-blue) {
+			background: theme.$highlight-blue;
+			color: #000;
+			padding: 0.2em 0.5em;
+			border-radius: 0.35em;
+		}
+
+		:global(mark.highlight-purple) {
+			background: theme.$highlight-purple;
+			color: #000;
+			padding: 0.2em 0.5em;
+			border-radius: 0.35em;
+		}
+
+		:global(mark.highlight-green) {
+			background: theme.$highlight-green;
+			color: #000;
+			padding: 0.2em 0.5em;
+			border-radius: 0.35em;
+		}
+
+		:global(mark.highlight-orange) {
+			background: theme.$highlight-orange;
+			color: #000;
+			padding: 0.2em 0.5em;
+			border-radius: 0.35em;
+		}
+
+		:global(mark.highlight-pink) {
+			background: theme.$highlight-pink;
+			color: #000;
+			padding: 0.2em 0.5em;
+			border-radius: 0.35em;
+		}
+
+		:global(pre) {
+			background-color: theme.$gray-900;
+			border-radius: 0.5rem;
+			padding: 1.5rem;
+			overflow-x: auto;
+			margin: 1.5rem 0;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+			:global(code) {
+				background: none;
+				padding: 0;
+				font-size: 0.95rem;
+				color: #e2e8f0;
+				font-family: theme.$font-monospace;
+			}
+		}
+
+		:global(code) {
+			background-color: color.adjust(theme.$gray-300, $lightness: 5%);
+			color: theme.$crimson-primary;
+			padding: 0.2rem 0.4rem;
+			border-radius: 0.25rem;
+			font-size: 0.9em;
+			font-family: theme.$font-monospace;
+		}
+
+		:global(blockquote) {
+			border-left: 4px solid theme.$crimson-primary;
+			padding-left: 1.5rem;
+			margin: 1.5rem 0;
+			color: theme.$gray-400;
+			font-style: italic;
+		}
+
+		:global(table) {
+			width: 100%;
+			border-collapse: collapse;
+			margin: 1.5rem 0;
+
+			:global(th),
+			:global(td) {
+				border: 1px solid theme.$gray-300;
+				padding: 0.75rem 1rem;
+				text-align: left;
+			}
+
+			:global(th) {
+				background-color: color.adjust(theme.$gray-300, $lightness: 8%);
+				font-weight: 600;
+			}
+
+			:global(tr:nth-child(even)) {
+				background-color: color.adjust(theme.$gray-300, $lightness: 10%);
+			}
+		}
+
+		:global(hr) {
+			border: none;
+			border-top: 2px solid #fff;
+			margin: 2rem 0;
+		}
+
+		:global(img) {
+			max-width: 100%;
+			height: auto;
+			border-radius: 0.5rem;
+			margin: 1.5rem 0;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.handout-container {
+		.handout-content {
+			font-size: 1rem;
+
+			:global(pre) {
+				padding: 1rem;
+				font-size: 0.875rem;
+			}
+		}
+	}
+}

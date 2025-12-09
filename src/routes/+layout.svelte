@@ -5,7 +5,6 @@
 
 	let { children } = $props();
 	let mobileMenuOpen = $state(false);
-	let isMobile = $state(false);
 
 	function toggleMobileMenu() {
 		mobileMenuOpen = !mobileMenuOpen;
@@ -14,15 +13,6 @@
 	function closeMobileMenu() {
 		mobileMenuOpen = false;
 	}
-
-	$effect(() => {
-		const checkMobile = () => {
-			isMobile = window.innerWidth <= 768;
-		};
-		checkMobile();
-		window.addEventListener('resize', checkMobile);
-		return () => window.removeEventListener('resize', checkMobile);
-	});
 </script>
 
 <svelte:head>
@@ -47,11 +37,7 @@
 			</nav>
 
 			<div class="mobile-nav-toggle">
-				<button
-					onclick={toggleMobileMenu}
-					class="menu-button"
-					aria-label="Toggle menu"
-				>
+				<button onclick={toggleMobileMenu} class="menu-button" aria-label="Toggle menu">
 					{#if mobileMenuOpen}
 						<IconX size={28} stroke={2} />
 					{:else}
@@ -107,7 +93,12 @@
 		padding: 0;
 		background: #1d1f25;
 		color: #e5e7eb;
-		font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+		font-family:
+			'Inter',
+			-apple-system,
+			BlinkMacSystemFont,
+			'Helvetica Neue',
+			sans-serif;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 	}

@@ -23,7 +23,8 @@
 		{
 			icon: IconCode,
 			title: '應用開發與演算法班',
-			description: '深入學習C++、Python等程式語言，掌握演算法核心概念，為APCS檢定與學科能力競賽做好準備'
+			description:
+				'深入學習C++、Python等程式語言，掌握演算法核心概念，為APCS檢定與學科能力競賽做好準備'
 		},
 		{
 			icon: IconShield,
@@ -63,7 +64,10 @@
 
 <svelte:head>
 	<title>關於我們 - CYSHIRC 嘉義高中資訊研究社</title>
-	<meta name="description" content="CYSHIRC 致力於為學生提供優質的程式教育環境，透過系統化課程、專案實作與競賽參與，培養學生的技術能力與團隊合作精神。" />
+	<meta
+		name="description"
+		content="CYSHIRC 致力於為學生提供優質的程式教育環境，透過系統化課程、專案實作與競賽參與，培養學生的技術能力與團隊合作精神。"
+	/>
 	<meta property="og:title" content="關於我們 - CYSHIRC" />
 	<meta property="og:description" content="培養未來科技人才，提供優質的程式教育環境。" />
 </svelte:head>
@@ -86,7 +90,7 @@
 	<section class="stats-section">
 		<div class="container">
 			<div class="stats-grid">
-				{#each stats as stat}
+				{#each stats as stat (stat.label)}
 					<div class="stat-card">
 						<div class="stat-number">{stat.number}</div>
 						<div class="stat-label">{stat.label}</div>
@@ -107,7 +111,8 @@
 						rel="noopener noreferrer"
 						class="link-highlight">SCIST.tw</a
 					>的合作社團，我們致力於培養學生的程式設計能力、資訊安全意識，以及科技創新思維。在這裡，你將與
-					<strong>36位</strong>志同道合的夥伴一起成長，由經驗豐富且極具耐心的學長姐們帶領，從零開始打造屬於你的資訊技術之路。
+					<strong>36位</strong
+					>志同道合的夥伴一起成長，由經驗豐富且極具耐心的學長姐們帶領，從零開始打造屬於你的資訊技術之路。
 				</p>
 				<p class="intro-text">
 					我們不只是學習寫程式，更是在培養<strong>解決問題的能力與邏輯思維</strong>！
@@ -120,7 +125,7 @@
 		<div class="container">
 			<h2 class="section-title">雙軌<span class="highlight">課程設計</span></h2>
 			<div class="courses-grid">
-				{#each courses as course}
+				{#each courses as course (course.title)}
 					<div class="course-card">
 						<div class="course-icon">
 							<svelte:component this={course.icon} size={40} stroke={1.5} />
@@ -137,7 +142,7 @@
 		<div class="container">
 			<h2 class="section-title">多元<span class="highlight">技術領域</span></h2>
 			<div class="tech-grid">
-				{#each techFields as field}
+				{#each techFields as field (field.title)}
 					<div class="tech-card">
 						<div class="tech-icon">
 							<svelte:component this={field.icon} size={32} stroke={1.5} />
@@ -154,7 +159,7 @@
 		<div class="container">
 			<h2 class="section-title">社團<span class="highlight">特點</span></h2>
 			<div class="features-grid">
-				{#each features as feature}
+				{#each features as feature (feature.title)}
 					<div class="feature-card">
 						<div class="feature-icon">
 							<svelte:component this={feature.icon} size={36} stroke={1.5} />
@@ -176,20 +181,25 @@
 					<a href="/contact" class="btn-primary">聯絡我們</a>
 					<a href="/events" class="btn-secondary">查看活動</a>
 				</div>
-			<div class="cta-info">
-				<a href="https://www.instagram.com/cysh_irc/" target="_blank" rel="noopener noreferrer" class="info-link">
-					<IconBrandInstagram size={20} stroke={2} />
-					<span>Instagram: @cysh_irc</span>
-				</a>
-				<a href="https://scist.org" target="_blank" rel="noopener noreferrer" class="info-link">
-					<IconHeartHandshake size={20} stroke={2} />
-					<span>合作夥伴: SCIST.tw</span>
-				</a>
-				<div class="info-link">
-					<IconCurrencyDollar size={20} stroke={2} />
-					<span>社費: 上下學期各800元（含社服、講師費、點心）</span>
+				<div class="cta-info">
+					<a
+						href="https://www.instagram.com/cysh_irc/"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="info-link"
+					>
+						<IconBrandInstagram size={20} stroke={2} />
+						<span>Instagram: @cysh_irc</span>
+					</a>
+					<a href="https://scist.org" target="_blank" rel="noopener noreferrer" class="info-link">
+						<IconHeartHandshake size={20} stroke={2} />
+						<span>合作夥伴: SCIST.tw</span>
+					</a>
+					<div class="info-link">
+						<IconCurrencyDollar size={20} stroke={2} />
+						<span>社費: 上下學期各800元（含社服、講師費、點心）</span>
+					</div>
 				</div>
-			</div>
 			</div>
 		</div>
 	</section>

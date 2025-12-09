@@ -1,7 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Montserrat:wght@400;700&family=Playfair+Display:wght@400;700&family=Source+Sans+Pro:wght@400;600;700&display=swap');
+
+$font-primary: 'Montserrat', sans-serif;
+$font-body: 'Source Sans Pro', sans-serif;
+$font-heading-serif: 'Playfair Display', serif;
+$font-monospace: 'IBM Plex Mono', monospace;
+
 $crimson-primary: #ce1a4b;
 $crimson-dark: #a01538;
 $crimson-light: #e63764;
-$highlight-yellow: #d4ff00;
+$highlight-yellow: #fff176;
+$highlight-blue: #7db4d4;
+$highlight-purple: #b8a4ce;
+$highlight-green: #b8d88c;
+$highlight-orange: #ffbc7f;
+$highlight-pink: #ffaad5;
 $gray-900: #0f1117;
 $gray-800: #1a1d29;
 $gray-700: #252936;
@@ -9,6 +21,8 @@ $gray-600: #32374a;
 $gray-400: #9ca3af;
 $gray-300: #d1d5db;
 $transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+$white: #ffffff;
 
 @mixin container {
 	max-width: 1440px;

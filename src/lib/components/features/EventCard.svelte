@@ -8,8 +8,13 @@
 		actionLabel?: string;
 	};
 
-	let { event, variant = 'compact', showAction = false, actionLabel = '了解更多' }: Props = $props();
-	
+	let {
+		event,
+		variant = 'compact',
+		showAction = false,
+		actionLabel = '了解更多'
+	}: Props = $props();
+
 	const Icon = event.icon;
 </script>
 

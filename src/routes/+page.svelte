@@ -1,10 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import {
-		IconArrowRight,
-		IconChevronLeft,
-		IconChevronRight
-	} from '@tabler/icons-svelte';
+	import { IconArrowRight, IconChevronLeft, IconChevronRight } from '@tabler/icons-svelte';
 	import { EventCard, FeatureCard } from '$lib/components';
 	import eventsData from '$lib/data/events.json';
 	import featuresData from '$lib/data/features.json';
@@ -29,17 +25,23 @@
 			galleryImages = images as string[];
 		});
 
-		if (galleryImages.length > 1) {
-			autoplayInterval = setInterval(() => {
-				nextImage();
-			}, 5000);
-		}
-
 		return () => {
 			if (autoplayInterval) {
 				clearInterval(autoplayInterval);
 			}
 		};
+	});
+
+	// Use $effect to start autoplay when galleryImages changes
+	$effect(() => {
+		if (galleryImages.length > 1) {
+			if (autoplayInterval) {
+				clearInterval(autoplayInterval);
+			}
+			autoplayInterval = setInterval(() => {
+				nextImage();
+			}, 5000);
+		}
 	});
 
 	function nextImage() {
@@ -57,14 +59,17 @@
 
 <svelte:head>
 	<title>CYSHIRC - 嘉義高中資訊研究社</title>
-	<meta name="description" content="探索程式設計的無限可能，與志同道合的夥伴一起成長。從零基礎到專案實戰，我們提供完整的學習路徑。" />
+	<meta
+		name="description"
+		content="探索程式設計的無限可能，與志同道合的夥伴一起成長。從零基礎到專案實戰，我們提供完整的學習路徑。"
+	/>
 	<meta name="keywords" content="嘉義高中,資訊研究社,程式設計,CYSHIRC,學生社團,程式教育" />
-	
+
 	<meta property="og:type" content="website" />
 	<meta property="og:title" content="CYSHIRC - 嘉義高中資訊研究社" />
 	<meta property="og:description" content="探索程式設計的無限可能，與志同道合的夥伴一起成長。" />
 	<meta property="og:image" content="/og-image.jpg" />
-	
+
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="CYSHIRC - 嘉義高中資訊研究社" />
 	<meta name="twitter:description" content="探索程式設計的無限可能，與志同道合的夥伴一起成長。" />
@@ -76,11 +81,11 @@
 		{#if galleryImages.length > 0}
 			<div class="hero-background">
 				<div class="carousel-images">
-					{#each galleryImages as image, index}
+					{#each galleryImages as image, index (image)}
 						<div class="carousel-image" class:active={index === currentImageIndex}>
-							<img 
-								src={image} 
-								alt="社團活動照片 {index + 1}" 
+							<img
+								src={image}
+								alt="社團活動照片 {index + 1}"
 								loading={index === 0 ? 'eager' : 'lazy'}
 								decoding="async"
 							/>
@@ -121,7 +126,8 @@
 			</button>
 
 			<div class="carousel-indicators">
-				{#each galleryImages as _, index}
+				<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
+				{#each { length: galleryImages.length } as _, index (index)}
 					<button
 						class="indicator"
 						class:active={index === currentImageIndex}
@@ -141,7 +147,7 @@
 			</div>
 
 			<div class="events-grid">
-				{#each events as event}
+				{#each events as event (event.id)}
 					<EventCard {event} variant="compact" />
 				{/each}
 			</div>
@@ -158,7 +164,8 @@
 						<span class="highlight">科技人才</span>
 					</h2>
 					<p class="about-text">
-						CYSHIRC 致力於為學生提供優質的程式教育環境，透過系統化課程、專案實作與競賽參與，培養學生的技術能力與團隊合作精神。
+						CYSHIRC
+						致力於為學生提供優質的程式教育環境，透過系統化課程、專案實作與競賽參與，培養學生的技術能力與團隊合作精神。
 					</p>
 					<p class="about-text">
 						無論你是程式新手還是資深玩家，都能在這裡找到屬於自己的學習路徑，與志同道合的夥伴一起成長。
@@ -170,7 +177,7 @@
 				</div>
 
 				<div class="features-grid">
-					{#each features as feature}
+					{#each features as feature (feature.title)}
 						<FeatureCard {feature} />
 					{/each}
 				</div>
@@ -255,11 +262,7 @@
 				left: 0;
 				width: 100%;
 				height: 100%;
-				background: linear-gradient(
-					135deg,
-					rgba(0, 0, 0, 0.65) 0%,
-					rgba(0, 0, 0, 0.65) 100%
-				);
+				background: linear-gradient(135deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.65) 100%);
 				z-index: 1;
 			}
 		}

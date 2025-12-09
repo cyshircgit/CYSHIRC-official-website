@@ -1,5 +1,12 @@
 <script lang="ts">
-	import { IconMail, IconBrandGithub, IconBrandInstagram, IconBrandDiscord, IconMapPin, IconArrowRight } from '@tabler/icons-svelte';
+	import {
+		IconMail,
+		IconBrandGithub,
+		IconBrandInstagram,
+		IconBrandDiscord,
+		IconMapPin,
+		IconArrowRight
+	} from '@tabler/icons-svelte';
 
 	const contactMethods = [
 		{
@@ -37,9 +44,15 @@
 
 <svelte:head>
 	<title>聯絡資訊 - CYSHIRC 嘉義高中資訊研究社</title>
-	<meta name="description" content="有任何問題或想加入我們？歡迎隨時與我們聯繫。透過 Email、Instagram、GitHub 或 Discord 與我們交流。" />
+	<meta
+		name="description"
+		content="有任何問題或想加入我們？歡迎隨時與我們聯繫。透過 Email、Instagram、GitHub 或 Discord 與我們交流。"
+	/>
 	<meta property="og:title" content="聯絡資訊 - CYSHIRC" />
-	<meta property="og:description" content="歡迎隨時與我們聯繫，無論是想加入社團還是詢問活動資訊。" />
+	<meta
+		property="og:description"
+		content="歡迎隨時與我們聯繫，無論是想加入社團還是詢問活動資訊。"
+	/>
 </svelte:head>
 
 <div class="page">
@@ -50,9 +63,7 @@
 				<h1 class="hero-title">
 					聯絡<span class="highlight">我們</span>
 				</h1>
-				<p class="hero-subtitle">
-					有任何問題或想加入我們？歡迎隨時與我們聯繫
-				</p>
+				<p class="hero-subtitle">有任何問題或想加入我們？歡迎隨時與我們聯繫</p>
 			</div>
 		</div>
 	</section>
@@ -67,9 +78,9 @@
 					</p>
 
 					<div class="contact-methods">
-						{#each contactMethods as method}
-							<a 
-								href={method.link} 
+						{#each contactMethods as method (method.title)}
+							<a
+								href={method.link}
 								class="contact-method"
 								target={method.link?.startsWith('http') ? '_blank' : undefined}
 								rel={method.link?.startsWith('http') ? 'noopener noreferrer' : undefined}
@@ -94,58 +105,16 @@
 </div>
 
 <style lang="scss">
-	$crimson-primary: #ce1a4b;
-	$crimson-dark: #a01538;
-	$highlight-yellow: #d4ff00;
-	$gray-900: #0f1117;
-	$gray-800: #1a1d29;
-	$gray-700: #252936;
-	$gray-600: #32374a;
-	$gray-400: #9ca3af;
-	$transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+	@use '$lib/styles/theme' as theme;
 
 	.page {
-		background: $gray-900;
+		background: theme.$gray-900;
 		min-height: 100vh;
-	}
-
-	.container {
-		max-width: 1440px;
-		margin: 0 auto;
-		padding: 0 3.5rem;
-
-		@media (max-width: 1024px) {
-			padding: 0 2rem;
-		}
-
-		@media (max-width: 768px) {
-			padding: 0 1.5rem;
-		}
-	}
-
-	.section-label {
-		display: inline-block;
-		font-size: 0.75rem;
-		font-weight: 700;
-		letter-spacing: 0.15em;
-		text-transform: uppercase;
-		color: $gray-400;
-		margin-bottom: 1.5rem;
-	}
-
-	.highlight {
-		background: $highlight-yellow;
-		color: $gray-900;
-		padding: 0.1em 0.35em;
-		margin-left: 0.15em;
-		border-radius: 0.25em;
-		display: inline-block;
-		line-height: 1.3;
 	}
 
 	.contact-hero {
 		padding: 8rem 0 6rem;
-		background: $gray-900;
+		background: theme.$gray-900;
 
 		@media (max-width: 768px) {
 			padding: 5rem 0 4rem;
@@ -176,7 +145,7 @@
 			.hero-subtitle {
 				font-size: 1.25rem;
 				line-height: 1.7;
-				color: $gray-400;
+				color: theme.$gray-400;
 				margin: 0;
 				font-weight: 500;
 
@@ -189,7 +158,7 @@
 
 	.contact-section {
 		padding: 4rem 0 10rem;
-		background: $gray-900;
+		background: theme.$gray-900;
 
 		@media (max-width: 768px) {
 			padding: 3rem 0 6rem;
@@ -219,7 +188,7 @@
 		.info-description {
 			font-size: 1.125rem;
 			line-height: 1.8;
-			color: $gray-400;
+			color: theme.$gray-400;
 			margin: 0 0 4rem;
 			text-align: center;
 			max-width: 700px;
@@ -238,12 +207,12 @@
 		display: flex;
 		gap: 1.5rem;
 		align-items: center;
-		background: $gray-800;
-		border: 1.5px solid $gray-700;
+		background: theme.$gray-800;
+		border: 1.5px solid theme.$gray-700;
 		border-radius: 1.25rem;
 		padding: 2rem;
 		text-decoration: none;
-		transition: all 0.4s $transition-smooth;
+		transition: all 0.4s theme.$transition-smooth;
 		position: relative;
 		overflow: hidden;
 
@@ -254,22 +223,22 @@
 			left: 0;
 			width: 0;
 			height: 100%;
-			background: linear-gradient(90deg, transparent, rgba($crimson-primary, 0.1));
-			transition: width 0.4s $transition-smooth;
+			background: linear-gradient(90deg, transparent, rgba(theme.$crimson-primary, 0.1));
+			transition: width 0.4s theme.$transition-smooth;
 		}
 
 		&:hover {
-			border-color: $crimson-primary;
+			border-color: theme.$crimson-primary;
 			transform: translateX(8px);
-			background: $gray-700;
+			background: theme.$gray-700;
 
 			&::before {
 				width: 100%;
 			}
 
 			.method-icon {
-				background: $crimson-primary;
-				border-color: $crimson-primary;
+				background: theme.$crimson-primary;
+				border-color: theme.$crimson-primary;
 				color: #fff;
 				transform: scale(1.05) rotate(-5deg);
 			}
@@ -283,15 +252,15 @@
 		.method-icon {
 			width: 64px;
 			height: 64px;
-			background: $gray-700;
-			border: 1.5px solid $gray-600;
+			background: theme.$gray-700;
+			border: 1.5px solid theme.$gray-600;
 			border-radius: 1rem;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			color: $crimson-primary;
+			color: theme.$crimson-primary;
 			flex-shrink: 0;
-			transition: all 0.4s $transition-smooth;
+			transition: all 0.4s theme.$transition-smooth;
 		}
 
 		.method-content {
@@ -302,7 +271,7 @@
 				font-weight: 700;
 				letter-spacing: 0.05em;
 				text-transform: uppercase;
-				color: $gray-400;
+				color: theme.$gray-400;
 				margin: 0 0 0.5rem;
 			}
 
@@ -316,10 +285,10 @@
 		}
 
 		.method-arrow {
-			color: $crimson-primary;
+			color: theme.$crimson-primary;
 			opacity: 0;
 			transform: translateX(-10px);
-			transition: all 0.4s $transition-smooth;
+			transition: all 0.4s theme.$transition-smooth;
 		}
 
 		@media (max-width: 768px) {
