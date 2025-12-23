@@ -206,18 +206,10 @@
 </div>
 
 <style lang="scss">
-	$crimson-primary: #ce1a4b;
-	$crimson-dark: #a01538;
-	$highlight-yellow: #d4ff00;
-	$gray-900: #0f1117;
-	$gray-800: #1a1d29;
-	$gray-700: #252936;
-	$gray-600: #32374a;
-	$gray-400: #9ca3af;
-	$transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+	@use '$lib/styles/theme' as theme;
 
-	.page {
-		background: $gray-900;
+.page {
+		background: theme.$gray-900;
 		min-height: 100vh;
 	}
 
@@ -235,19 +227,19 @@
 		}
 	}
 
-	.section-label {
+.section-label {
 		display: inline-block;
 		font-size: 0.75rem;
 		font-weight: 700;
 		letter-spacing: 0.15em;
 		text-transform: uppercase;
-		color: $gray-400;
+		color: theme.$gray-400;
 		margin-bottom: 1.5rem;
 	}
 
-	.highlight {
-		background: $highlight-yellow;
-		color: $gray-900;
+.highlight {
+		background: theme.$highlight-yellow;
+		color: theme.$gray-900;
 		padding: 0.1em 0.35em;
 		margin-left: 0.15em;
 		border-radius: 0.25em;
@@ -255,9 +247,9 @@
 		line-height: 1.3;
 	}
 
-	.hero {
+.hero {
 		padding: 8rem 0 6rem;
-		background: $gray-900;
+		background: theme.$gray-900;
 
 		@media (max-width: 768px) {
 			padding: 5rem 0 4rem;
@@ -285,10 +277,10 @@
 				}
 			}
 
-			.hero-subtitle {
+.hero-subtitle {
 				font-size: 1.25rem;
 				line-height: 1.8;
-				color: $gray-400;
+				color: theme.$gray-400;
 				margin: 0;
 				font-weight: 500;
 
@@ -303,11 +295,11 @@
 		}
 	}
 
-	.stats-section {
+.stats-section {
 		padding: 4rem 0;
-		background: $gray-800;
-		border-top: 1.5px solid $gray-700;
-		border-bottom: 1.5px solid $gray-700;
+		background: theme.$gray-800;
+		border-top: 1.5px solid theme.$gray-700;
+		border-bottom: 1.5px solid theme.$gray-700;
 
 		.stats-grid {
 			display: grid;
@@ -323,10 +315,10 @@
 		.stat-card {
 			text-align: center;
 
-			.stat-number {
+.stat-number {
 				font-size: 3.5rem;
 				font-weight: 900;
-				color: $crimson-primary;
+				color: theme.$crimson-primary;
 				line-height: 1;
 				margin-bottom: 0.5rem;
 				letter-spacing: -0.02em;
@@ -336,19 +328,19 @@
 				}
 			}
 
-			.stat-label {
+.stat-label {
 				font-size: 0.875rem;
 				font-weight: 600;
-				color: $gray-400;
+				color: theme.$gray-400;
 				text-transform: uppercase;
 				letter-spacing: 0.05em;
 			}
 		}
 	}
 
-	.intro-section {
+.intro-section {
 		padding: 6rem 0;
-		background: $gray-900;
+		background: theme.$gray-900;
 
 		.intro-content {
 			max-width: 900px;
@@ -368,10 +360,10 @@
 				}
 			}
 
-			.intro-text {
+.intro-text {
 				font-size: 1.125rem;
 				line-height: 1.9;
-				color: $gray-400;
+				color: theme.$gray-400;
 				margin: 0 0 1.5rem;
 
 				strong {
@@ -379,15 +371,15 @@
 					font-weight: 700;
 				}
 
-				.link-highlight {
-					color: $crimson-primary;
+.link-highlight {
+					color: theme.$crimson-primary;
 					font-weight: 700;
 					text-decoration: none;
-					transition: all 0.2s $transition-smooth;
+					transition: all 0.2s theme.$transition-smooth;
 					border-bottom: 2px solid transparent;
 
 					&:hover {
-						border-bottom-color: $crimson-primary;
+						border-bottom-color: theme.$crimson-primary;
 					}
 				}
 
@@ -400,9 +392,9 @@
 		}
 	}
 
-	.courses-section {
+.courses-section {
 		padding: 6rem 0;
-		background: $gray-800;
+		background: theme.$gray-800;
 
 		.section-title {
 			font-size: 2.5rem;
@@ -429,37 +421,37 @@
 			}
 		}
 
-		.course-card {
-			background: $gray-900;
-			border: 1.5px solid $gray-700;
+.course-card {
+			background: theme.$gray-900;
+			border: 1.5px solid theme.$gray-700;
 			border-radius: 1.5rem;
 			padding: 3rem;
-			transition: all 0.4s $transition-smooth;
+			transition: all 0.4s theme.$transition-smooth;
 
 			&:hover {
-				border-color: $crimson-primary;
+				border-color: theme.$crimson-primary;
 				transform: translateY(-8px);
-				box-shadow: 0 20px 40px rgba($crimson-primary, 0.1);
+				box-shadow: 0 20px 40px rgba(theme.$crimson-primary, 0.1);
 
 				.course-icon {
-					background: $crimson-primary;
+					background: theme.$crimson-primary;
 					color: #fff;
 					transform: scale(1.1) rotate(-5deg);
 				}
 			}
 
-			.course-icon {
+.course-icon {
 				width: 80px;
 				height: 80px;
-				background: $gray-700;
-				border: 1.5px solid $gray-600;
+				background: theme.$gray-700;
+				border: 1.5px solid theme.$gray-600;
 				border-radius: 1.25rem;
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				color: $crimson-primary;
+				color: theme.$crimson-primary;
 				margin-bottom: 1.5rem;
-				transition: all 0.4s $transition-smooth;
+				transition: all 0.4s theme.$transition-smooth;
 			}
 
 			.course-title {
@@ -470,18 +462,18 @@
 				letter-spacing: -0.02em;
 			}
 
-			.course-description {
+.course-description {
 				font-size: 1rem;
 				line-height: 1.7;
-				color: $gray-400;
+				color: theme.$gray-400;
 				margin: 0;
 			}
 		}
 	}
 
-	.tech-section {
+.tech-section {
 		padding: 6rem 0;
-		background: $gray-900;
+		background: theme.$gray-900;
 
 		.section-title {
 			font-size: 2.5rem;
@@ -507,13 +499,13 @@
 			}
 		}
 
-		.tech-card {
-			background: $gray-800;
-			border: 1.5px solid $gray-700;
+.tech-card {
+			background: theme.$gray-800;
+			border: 1.5px solid theme.$gray-700;
 			border-radius: 1.25rem;
 			padding: 2rem;
 			text-align: center;
-			transition: all 0.3s $transition-smooth;
+			transition: all 0.3s theme.$transition-smooth;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
@@ -521,19 +513,19 @@
 			min-height: 200px;
 
 			&:hover {
-				border-color: $crimson-primary;
+				border-color: theme.$crimson-primary;
 				transform: translateY(-4px);
 
 				.tech-icon {
-					color: $crimson-primary;
+					color: theme.$crimson-primary;
 					transform: scale(1.05);
 				}
 			}
 
 			.tech-icon {
-				color: $gray-400;
+				color: theme.$gray-400;
 				margin-bottom: 0.75rem;
-				transition: all 0.3s $transition-smooth;
+				transition: all 0.3s theme.$transition-smooth;
 			}
 
 			.tech-title {
@@ -544,18 +536,18 @@
 				line-height: 1.3;
 			}
 
-			.tech-description {
+.tech-description {
 				font-size: 0.875rem;
-				color: $gray-400;
+				color: theme.$gray-400;
 				margin: 0;
 				line-height: 1.4;
 			}
 		}
 	}
 
-	.features-section {
+.features-section {
 		padding: 6rem 0;
-		background: $gray-800;
+		background: theme.$gray-800;
 
 		.section-title {
 			font-size: 2.5rem;
@@ -585,20 +577,20 @@
 			}
 		}
 
-		.feature-card {
-			background: $gray-900;
-			border: 1.5px solid $gray-700;
+.feature-card {
+			background: theme.$gray-900;
+			border: 1.5px solid theme.$gray-700;
 			border-radius: 1.25rem;
 			padding: 2.5rem;
 			text-align: center;
-			transition: all 0.3s $transition-smooth;
+			transition: all 0.3s theme.$transition-smooth;
 
 			&:hover {
-				border-color: $crimson-primary;
+				border-color: theme.$crimson-primary;
 				transform: translateY(-4px);
 
 				.feature-icon {
-					background: $crimson-primary;
+					background: theme.$crimson-primary;
 					color: #fff;
 				}
 			}
@@ -606,14 +598,14 @@
 			.feature-icon {
 				width: 72px;
 				height: 72px;
-				background: $gray-700;
+				background: theme.$gray-700;
 				border-radius: 1rem;
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				color: $crimson-primary;
+				color: theme.$crimson-primary;
 				margin: 0 auto 1.5rem;
-				transition: all 0.3s $transition-smooth;
+				transition: all 0.3s theme.$transition-smooth;
 			}
 
 			.feature-title {
@@ -623,18 +615,18 @@
 				margin: 0 0 0.75rem;
 			}
 
-			.feature-description {
+.feature-description {
 				font-size: 0.9375rem;
 				line-height: 1.6;
-				color: $gray-400;
+				color: theme.$gray-400;
 				margin: 0;
 			}
 		}
 	}
 
-	.cta-section {
+.cta-section {
 		padding: 8rem 0;
-		background: $gray-900;
+		background: theme.$gray-900;
 
 		@media (max-width: 768px) {
 			padding: 5rem 0;
@@ -658,9 +650,9 @@
 				}
 			}
 
-			.cta-text {
+.cta-text {
 				font-size: 1.25rem;
-				color: $gray-400;
+				color: theme.$gray-400;
 				margin: 0 0 3rem;
 			}
 
@@ -676,7 +668,7 @@
 				}
 			}
 
-			.btn-primary,
+.btn-primary,
 			.btn-secondary {
 				padding: 1rem 2.5rem;
 				border-radius: 9999px;
@@ -684,7 +676,7 @@
 				font-size: 1rem;
 				text-transform: uppercase;
 				letter-spacing: 0.05em;
-				transition: all 0.3s $transition-smooth;
+				transition: all 0.3s theme.$transition-smooth;
 				display: inline-block;
 
 				@media (max-width: 768px) {
@@ -693,22 +685,22 @@
 				}
 			}
 
-			.btn-primary {
-				background: $crimson-primary;
+.btn-primary {
+				background: theme.$crimson-primary;
 				color: #fff;
-				border: 2px solid $crimson-primary;
+				border: 2px solid theme.$crimson-primary;
 
 				&:hover {
 					background: transparent;
 					transform: translateY(-2px);
-					box-shadow: 0 10px 30px rgba($crimson-primary, 0.3);
+					box-shadow: 0 10px 30px rgba(theme.$crimson-primary, 0.3);
 				}
 			}
 
-			.btn-secondary {
+.btn-secondary {
 				background: transparent;
 				color: #fff;
-				border: 2px solid $gray-600;
+				border: 2px solid theme.$gray-600;
 
 				&:hover {
 					border-color: #fff;
@@ -716,35 +708,35 @@
 				}
 			}
 
-			.cta-info {
+.cta-info {
 				display: flex;
 				flex-direction: column;
 				gap: 1rem;
 				padding-top: 3rem;
-				border-top: 1.5px solid $gray-700;
+				border-top: 1.5px solid theme.$gray-700;
 
 				.info-link {
 					display: inline-flex;
 					align-items: center;
 					gap: 0.75rem;
 					font-size: 1rem;
-					color: $gray-400;
+					color: theme.$gray-400;
 					text-decoration: none;
 					margin: 0 auto;
-					transition: all 0.3s $transition-smooth;
+					transition: all 0.3s theme.$transition-smooth;
 
 					&:hover {
 						color: #fff;
 						transform: translateX(4px);
 
 						:global(svg) {
-							color: $crimson-primary;
+							color: theme.$crimson-primary;
 						}
 					}
 
 					:global(svg) {
 						flex-shrink: 0;
-						transition: color 0.3s $transition-smooth;
+						transition: color 0.3s theme.$transition-smooth;
 					}
 				}
 

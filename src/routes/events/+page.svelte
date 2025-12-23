@@ -61,20 +61,10 @@
 </div>
 
 <style lang="scss">
-	$crimson-primary: #ce1a4b;
-	$crimson-dark: #a01538;
-	$crimson-light: #e63764;
-	$highlight-yellow: #d4ff00;
-	$gray-900: #0f1117;
-	$gray-800: #1a1d29;
-	$gray-700: #252936;
-	$gray-600: #32374a;
-	$gray-400: #9ca3af;
-	$gray-300: #d1d5db;
-	$transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+	@use '$lib/styles/theme' as theme;
 
-	.page {
-		background: $gray-900;
+.page {
+		background: theme.$gray-900;
 		min-height: 100vh;
 	}
 
@@ -92,9 +82,9 @@
 		}
 	}
 
-	.hero {
+.hero {
 		padding: 8rem 0 6rem;
-		background: $gray-900;
+		background: theme.$gray-900;
 		text-align: center;
 
 		@media (max-width: 768px) {
@@ -105,15 +95,15 @@
 			max-width: 800px;
 			margin: 0 auto;
 
-			.hero-badge {
+.hero-badge {
 				display: inline-block;
 				font-size: 0.6875rem;
 				font-weight: 700;
 				letter-spacing: 0.15em;
 				text-transform: uppercase;
-				color: $gray-400;
+				color: theme.$gray-400;
 				padding: 0.5rem 1rem;
-				border: 1.5px solid $gray-700;
+				border: 1.5px solid theme.$gray-700;
 				border-radius: 100px;
 				margin-bottom: 2rem;
 			}
@@ -131,10 +121,10 @@
 				}
 			}
 
-			.hero-subtitle {
+.hero-subtitle {
 				font-size: 1.125rem;
 				line-height: 1.7;
-				color: $gray-400;
+				color: theme.$gray-400;
 				margin: 0;
 				font-weight: 500;
 
@@ -164,21 +154,21 @@
 		}
 	}
 
-	.event-card {
-		background: $gray-800;
-		border: 1px solid $gray-700;
+.event-card {
+		background: theme.$gray-800;
+		border: 1px solid theme.$gray-700;
 		border-radius: 1.5rem;
 		padding: 2.5rem;
-		transition: all 0.3s $transition-smooth;
+		transition: all 0.3s theme.$transition-smooth;
 
 		&:hover {
 			transform: translateY(-8px);
-			border-color: $crimson-primary;
-			box-shadow: 0 24px 48px rgba($crimson-primary, 0.15);
+			border-color: theme.$crimson-primary;
+			box-shadow: 0 24px 48px rgba(theme.$crimson-primary, 0.15);
 
 			.event-icon {
-				background: rgba($crimson-primary, 0.9);
-				border-color: $crimson-primary;
+				background: rgba(theme.$crimson-primary, 0.9);
+				border-color: theme.$crimson-primary;
 				transform: scale(1.1);
 				color: #fff;
 			}
@@ -191,18 +181,18 @@
 			margin-bottom: 1.5rem;
 		}
 
-		.event-icon {
+.event-icon {
 			width: 80px;
 			height: 80px;
-			background: rgba($crimson-primary, 0.1);
-			border: 2px solid rgba($crimson-primary, 0.3);
+			background: rgba(theme.$crimson-primary, 0.1);
+			border: 2px solid rgba(theme.$crimson-primary, 0.3);
 			border-radius: 1.25rem;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			color: $crimson-light;
+			color: theme.$crimson-light;
 			flex-shrink: 0;
-			transition: all 0.3s $transition-smooth;
+			transition: all 0.3s theme.$transition-smooth;
 		}
 
 		.event-meta {
@@ -212,29 +202,29 @@
 			padding-top: 0.5rem;
 		}
 
-		.event-category {
+.event-category {
 			display: inline-block;
 			font-size: 0.75rem;
 			font-weight: 700;
 			letter-spacing: 0.1em;
 			text-transform: uppercase;
-			color: $crimson-light;
-			background: rgba($crimson-primary, 0.15);
+			color: theme.$crimson-light;
+			background: rgba(theme.$crimson-primary, 0.15);
 			padding: 0.375rem 0.75rem;
 			border-radius: 100px;
 			width: fit-content;
 		}
 
-		.event-date {
+.event-date {
 			display: flex;
 			align-items: center;
 			gap: 0.5rem;
 			font-size: 0.875rem;
-			color: $gray-400;
+			color: theme.$gray-400;
 			font-weight: 600;
 
 			:global(svg) {
-				color: $crimson-primary;
+				color: theme.$crimson-primary;
 			}
 		}
 
@@ -247,10 +237,10 @@
 			margin: 0 0 1rem;
 		}
 
-		.event-description {
+.event-description {
 			font-size: 1rem;
 			line-height: 1.7;
-			color: $gray-400;
+			color: theme.$gray-400;
 			margin: 0 0 2rem;
 		}
 
@@ -260,26 +250,26 @@
 		}
 	}
 
-	.btn-secondary {
+.btn-secondary {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.5rem;
 		background: transparent;
-		color: $crimson-light;
+		color: theme.$crimson-light;
 		padding: 0.875rem 1.75rem;
 		border-radius: 100px;
 		font-weight: 700;
 		font-size: 0.9375rem;
 		letter-spacing: -0.01em;
-		transition: all 0.3s $transition-smooth;
-		border: 2px solid $crimson-primary;
+		transition: all 0.3s theme.$transition-smooth;
+		border: 2px solid theme.$crimson-primary;
 		cursor: pointer;
 
 		&:hover {
-			background: $crimson-primary;
+			background: theme.$crimson-primary;
 			color: #fff;
 			transform: translateY(-2px);
-			box-shadow: 0 12px 24px rgba($crimson-primary, 0.3);
+			box-shadow: 0 12px 24px rgba(theme.$crimson-primary, 0.3);
 		}
 	}
 </style>

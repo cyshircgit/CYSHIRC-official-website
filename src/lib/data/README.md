@@ -2,7 +2,7 @@
 
 本目錄包含網站使用的所有 JSON 配置文件，方便管理和更新網站內容。
 
-## 📁 文件結構
+## 文件結構
 
 ### `stats.json`
 
@@ -10,10 +10,10 @@
 
 ```json
 {
-	"memberCount": 45,
-	"currentClass": "116級",
-	"semesterFee": "500",
-	"foundedYear": "2010"
+        "memberCount": 45,
+        "currentClass": "116級",
+        "semesterFee": "500",
+        "foundedYear": "2010"
 }
 ```
 
@@ -29,14 +29,14 @@
 
 ```json
 [
-	{
-		"id": 1,
-		"category": "社群活動",
-		"date": "2024.11",
-		"title": "新生迎新茶會",
-		"description": "活動描述...",
-		"icon": "IconUsers"
-	}
+        {
+                "id": 1,
+                "category": "社群活動",
+                "date": "2024.11",
+                "title": "新生迎新茶會",
+                "description": "活動描述...",
+                "icon": "IconUsers"
+        }
 ]
 ```
 
@@ -59,12 +59,12 @@
 
 ```json
 [
-	{
-		"id": 1,
-		"title": "技術學習",
-		"description": "系統化程式課程與工作坊",
-		"icon": "IconDeviceLaptop"
-	}
+        {
+                "id": 1,
+                "title": "技術學習",
+                "description": "系統化程式課程與工作坊",
+                "icon": "IconDeviceLaptop"
+        }
 ]
 ```
 
@@ -89,7 +89,7 @@
 
 ```json
 {
-	"memberCount": 50
+        "memberCount": 50
 }
 ```
 
@@ -99,12 +99,12 @@
 
 ```json
 {
-	"id": 4,
-	"category": "工作坊",
-	"date": "2025.03",
-	"title": "AI 機器學習入門",
-	"description": "學習基礎機器學習概念...",
-	"icon": "IconCode"
+        "id": 4,
+        "category": "工作坊",
+        "date": "2025.03",
+        "title": "AI 機器學習入門",
+        "description": "學習基礎機器學習概念...",
+        "icon": "IconCode"
 }
 ```
 
@@ -114,13 +114,13 @@
 
 ```json
 {
-	"semesterFee": "600"
+        "semesterFee": "600"
 }
 ```
 
 ---
 
-## 📌 注意事項
+## 注意事項
 
 1. **Icon 名稱必須正確**：確保 JSON 中的 `icon` 值與 `iconMap` 中的鍵名對應
 2. **ID 唯一性**：events 和 features 的 `id` 必須唯一
@@ -129,7 +129,7 @@
 
 ---
 
-## 🚀 可用的 Icons
+## 可用的 Icons
 
 來自 `@tabler/icons-svelte`：
 

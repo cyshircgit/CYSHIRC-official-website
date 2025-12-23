@@ -1,7 +1,16 @@
 <script lang="ts">
 	import '../app.css';
+	import { page } from '$app/stores';
 	import { IconArrowRight, IconMenu2, IconX } from '@tabler/icons-svelte';
 	import favicon from '$lib/assets/favicon.svg';
+	import { Footer } from '$lib/components';
+
+	function isActive(path: string): boolean {
+		if (path === '/') {
+			return $page.url.pathname === '/';
+		}
+		return $page.url.pathname.startsWith(path);
+	}
 
 	let { children } = $props();
 	let mobileMenuOpen = $state(false);
@@ -30,10 +39,10 @@
 		<div class="navbar-content">
 			<a href="/" class="navbar-logo">CYSHIRC.</a>
 
-			<nav class="desktop-nav">
-				<a href="/" class="nav-link">首頁</a>
-				<a href="/events" class="nav-link">活動資訊</a>
-				<a href="/contact" class="nav-link">聯絡資訊</a>
+<nav class="desktop-nav">
+				<a href="/" class="nav-link" class:active={isActive('/')}>首頁</a>
+				<a href="/events" class="nav-link" class:active={isActive('/events')}>活動資訊</a>
+				<a href="/contact" class="nav-link" class:active={isActive('/contact')}>聯絡資訊</a>
 			</nav>
 
 			<div class="mobile-nav-toggle">
@@ -62,15 +71,15 @@
 {#if mobileMenuOpen}
 	<div class="mobile-menu animate-slideDown">
 		<nav class="mobile-nav">
-			<a href="/" class="mobile-nav-link" onclick={closeMobileMenu}>
+<a href="/" class="mobile-nav-link" class:active={isActive('/')} onclick={closeMobileMenu}>
 				<span>首頁</span>
 				<IconArrowRight size={20} stroke={2.5} />
 			</a>
-			<a href="/about" class="mobile-nav-link" onclick={closeMobileMenu}>
+			<a href="/about" class="mobile-nav-link" class:active={isActive('/about')} onclick={closeMobileMenu}>
 				<span>關於我們</span>
 				<IconArrowRight size={20} stroke={2.5} />
 			</a>
-			<a href="/contact" class="mobile-nav-link" onclick={closeMobileMenu}>
+			<a href="/contact" class="mobile-nav-link" class:active={isActive('/contact')} onclick={closeMobileMenu}>
 				<span>聯絡資訊</span>
 				<IconArrowRight size={20} stroke={2.5} />
 			</a>
@@ -79,6 +88,8 @@
 {/if}
 
 {@render children?.()}
+
+<Footer />
 
 <style lang="scss">
 	@use '$lib/styles/theme' as theme;
@@ -223,7 +234,7 @@
 		}
 	}
 
-	.nav-link {
+.nav-link {
 		color: $white;
 		text-decoration: none;
 		font-weight: 600;
@@ -235,7 +246,7 @@
 		gap: 0.375rem;
 		position: relative;
 		transition: all 0.2s ease;
-		opacity: 0.95;
+		opacity: 0.85;
 
 		&::before {
 			content: '';
@@ -248,12 +259,17 @@
 			transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 		}
 
-		&:hover {
+		&:hover,
+		&.active {
 			opacity: 1;
 
 			&::before {
 				width: 100%;
 			}
+		}
+
+		&.active {
+			font-weight: 700;
 		}
 	}
 
@@ -298,7 +314,7 @@
 		gap: 0;
 	}
 
-	.mobile-nav-link {
+.mobile-nav-link {
 		color: $white;
 		text-decoration: none;
 		font-weight: 600;
@@ -317,6 +333,12 @@
 			:global(svg) {
 				transform: translateX(4px);
 			}
+		}
+
+		&.active {
+			background: rgba(255, 255, 255, 0.15);
+			font-weight: 700;
+			border-left: 3px solid $white;
 		}
 
 		&:last-child {

@@ -1,0 +1,282 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "name": "CYSHIRC Official Website",
+  "version": "1.0.0",
+  "description": "Workspace configuration for the CYSHIRC (嘉義高中資訊研究社) official website built with SvelteKit, TypeScript, and Tailwind CSS",
+  "system_prompt": "You are working with the CYSHIRC Official Website codebase. This is a modern web application built with SvelteKit 5, TypeScript, and Tailwind CSS. The website serves as the official platform for the CYSHIRC Information Research Club at Chiayi Senior High School. It features responsive design, interactive components, event management, and social media integration. The codebase follows modern Svelte 5 patterns with $state and $effect reactivity, uses Tabler icons, and has a consistent design system with crimson primary colors.",
+  "vars": {
+    "project_root": "/home/tomycat/code/CYSHIRC-official-website",
+    "src_dir": "${project_root}/src",
+    "lib_dir": "${src_dir}/lib",
+    "routes_dir": "${src_dir}/routes"
+  },
+  "groups": [
+    {
+      "name": "Project Configuration & Setup",
+      "description": "Core project configuration files including package.json, build tools, TypeScript config, and development setup",
+      "system_prompt": "These files define the project's dependencies, build configuration, development scripts, and tooling setup. This includes SvelteKit configuration, TypeScript settings, ESLint/Prettier rules, and development environment setup.",
+      "opts": {
+        "remove_config_system_prompt": false
+      },
+      "data": [
+        "package_json",
+        "svelte_config",
+        "vite_config",
+        "tsconfig",
+        "eslint_config",
+        "prettier_config",
+        "gitignore",
+        "readme"
+      ]
+    },
+    {
+      "name": "Main Layout & Navigation",
+      "description": "Main layout component, navigation system, and global page structure",
+      "system_prompt": "These files define the main layout structure, navigation components, header, footer, and global page wrapper. The layout includes responsive navigation with mobile menu, active link highlighting, and consistent styling across all pages.",
+      "opts": {
+        "remove_config_system_prompt": false
+      },
+      "data": [
+        "layout_svelte",
+        "footer_component",
+        "app_css",
+        "app_html"
+      ]
+    },
+    {
+      "name": "Home Page",
+      "description": "Main homepage with hero section, event carousel, features showcase, and call-to-action",
+      "system_prompt": "The homepage features a dynamic image carousel, upcoming events display, feature cards, and responsive design. It uses Svelte 5 reactivity with $state and $effect for carousel functionality and data fetching.",
+      "opts": {
+        "remove_config_system_prompt": false
+      },
+      "data": [
+        "home_page",
+        "event_card_component",
+        "feature_card_component"
+      ]
+    },
+    {
+      "name": "Component System",
+      "description": "Reusable UI components including cards, buttons, and layout elements",
+      "system_prompt": "These are reusable Svelte components that follow the design system. Components include EventCard, FeatureCard, and Footer with consistent styling, hover effects, and responsive behavior.",
+      "opts": {
+        "remove_config_system_prompt": false
+      },
+      "data": [
+        "event_card_component",
+        "feature_card_component",
+        "footer_component",
+        "components_index"
+      ]
+    },
+    {
+      "name": "Utilities & Helpers",
+      "description": "Utility functions for events, features, icons, and data transformation",
+      "system_prompt": "Utility functions for handling events, features, icons, and data transformation. Includes date formatting, event filtering, icon mapping, and data structure transformation.",
+      "opts": {
+        "remove_config_system_prompt": false
+      },
+      "data": [
+        "utils_index",
+        "event_utils",
+        "feature_utils",
+        "icon_utils"
+      ]
+    },
+    {
+      "name": "Data Types & Definitions",
+      "description": "TypeScript type definitions for events, features, icons, and data structures",
+      "system_prompt": "TypeScript type definitions that provide type safety for the application. Includes interfaces for events, features, icons, and their relationships.",
+      "opts": {
+        "remove_config_system_prompt": false
+      },
+      "data": [
+        "types_index",
+        "event_types",
+        "feature_types",
+        "icon_types"
+      ]
+    },
+    {
+      "name": "Data & Content",
+      "description": "Static data files for events, features, and website content",
+      "system_prompt": "JSON data files that provide content for the website. Includes event listings, feature descriptions, and statistics. These files are imported and transformed by utility functions.",
+      "opts": {
+        "remove_config_system_prompt": false
+      },
+      "data": [
+        "events_data",
+        "features_data",
+        "stats_data"
+      ]
+    },
+    {
+      "name": "Styling System",
+      "description": "CSS/SCSS styles, theme variables, and design system configuration",
+      "system_prompt": "The styling system uses SCSS with CSS custom properties for theming. Includes color variables, mixins for buttons and containers, and responsive design utilities.",
+      "opts": {
+        "remove_config_system_prompt": false
+      },
+      "data": [
+        "app_css",
+        "theme_scss"
+      ]
+    },
+    {
+      "name": "Build & Deployment",
+      "description": "Build configuration, static adapter setup, and deployment settings",
+      "system_prompt": "Configuration for building and deploying the static website. Includes SvelteKit static adapter configuration and build optimization settings.",
+      "opts": {
+        "remove_config_system_prompt": false
+      },
+      "data": [
+        "svelte_config",
+        "vite_config",
+        "package_json"
+      ]
+    }
+  ],
+  "data": {
+    "package_json": {
+      "type": "file",
+      "path": "${project_root}/package.json",
+      "description": "Project dependencies, scripts, and configuration"
+    },
+    "svelte_config": {
+      "type": "file",
+      "path": "${project_root}/svelte.config.js",
+      "description": "SvelteKit configuration with static adapter"
+    },
+    "vite_config": {
+      "type": "file",
+      "path": "${project_root}/vite.config.ts",
+      "description": "Vite build configuration"
+    },
+    "tsconfig": {
+      "type": "file",
+      "path": "${project_root}/tsconfig.json",
+      "description": "TypeScript configuration"
+    },
+    "eslint_config": {
+      "type": "file",
+      "path": "${project_root}/eslint.config.js",
+      "description": "ESLint configuration for code quality"
+    },
+    "prettier_config": {
+      "type": "file",
+      "path": "${project_root}/.prettierrc",
+      "description": "Prettier formatting configuration"
+    },
+    "gitignore": {
+      "type": "file",
+      "path": "${project_root}/.gitignore",
+      "description": "Git ignore rules"
+    },
+    "readme": {
+      "type": "file",
+      "path": "${project_root}/README.md",
+      "description": "Project documentation and setup guide"
+    },
+    "layout_svelte": {
+      "type": "file",
+      "path": "${routes_dir}/+layout.svelte",
+      "description": "Main layout component with navigation and global styles"
+    },
+    "home_page": {
+      "type": "file",
+      "path": "${routes_dir}/+page.svelte",
+      "description": "Homepage with hero carousel, events, and features"
+    },
+    "app_css": {
+      "type": "file",
+      "path": "${src_dir}/app.css",
+      "description": "Global CSS styles"
+    },
+    "app_html": {
+      "type": "file",
+      "path": "${src_dir}/app.html",
+      "description": "HTML template with meta tags"
+    },
+    "event_card_component": {
+      "type": "file",
+      "path": "${lib_dir}/components/features/EventCard.svelte",
+      "description": "Event card component for displaying events"
+    },
+    "feature_card_component": {
+      "type": "file",
+      "path": "${lib_dir}/components/features/FeatureCard.svelte",
+      "description": "Feature card component for showcasing features"
+    },
+    "footer_component": {
+      "type": "file",
+      "path": "${lib_dir}/components/features/Footer.svelte",
+      "description": "Footer component with navigation and social links"
+    },
+    "components_index": {
+      "type": "file",
+      "path": "${lib_dir}/components/index.ts",
+      "description": "Components barrel export file"
+    },
+    "utils_index": {
+      "type": "file",
+      "path": "${lib_dir}/utils/index.ts",
+      "description": "Utilities barrel export file"
+    },
+    "event_utils": {
+      "type": "symbols",
+      "path": "${lib_dir}/utils/event.ts",
+      "description": "Event utility functions (getUpcomingEvents, formatDate, isEventPast)"
+    },
+    "feature_utils": {
+      "type": "symbols",
+      "path": "${lib_dir}/utils/feature.ts",
+      "description": "Feature utility functions (transformFeatures)"
+    },
+    "icon_utils": {
+      "type": "symbols",
+      "path": "${lib_dir}/utils/icon.ts",
+      "description": "Icon mapping utility"
+    },
+    "types_index": {
+      "type": "file",
+      "path": "${lib_dir}/types/index.ts",
+      "description": "Types barrel export file"
+    },
+    "event_types": {
+      "type": "file",
+      "path": "${lib_dir}/types/event.ts",
+      "description": "Event type definitions"
+    },
+    "feature_types": {
+      "type": "file",
+      "path": "${lib_dir}/types/feature.ts",
+      "description": "Feature type definitions"
+    },
+    "icon_types": {
+      "type": "file",
+      "path": "${lib_dir}/types/icon.ts",
+      "description": "Icon type definitions"
+    },
+    "events_data": {
+      "type": "file",
+      "path": "${lib_dir}/data/events.json",
+      "description": "Events data in JSON format"
+    },
+    "features_data": {
+      "type": "file",
+      "path": "${lib_dir}/data/features.json",
+      "description": "Features data in JSON format"
+    },
+    "stats_data": {
+      "type": "file",
+      "path": "${lib_dir}/data/stats.json",
+      "description": "Statistics data in JSON format"
+    },
+    "theme_scss": {
+      "type": "file",
+      "path": "${lib_dir}/styles/theme.scss",
+      "description": "SCSS theme variables and mixins"
+    }
+  }
+}
