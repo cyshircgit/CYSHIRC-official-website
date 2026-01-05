@@ -1,3 +1,9 @@
+export const prerender = true;
+
+export const entries = () => [
+	{ path: '/robots.txt' }
+];
+
 export async function GET() {
 	const robotsTxt = `User-agent: *
 Allow: /

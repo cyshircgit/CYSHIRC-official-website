@@ -15,7 +15,7 @@
 
         onMount(() => {
                 const imageModules = import.meta.glob(
-                        '$lib/assets/gallery/*.{jpg,jpeg,png,webp,svg}',
+                        '$lib/assets/gallery/*-optimized.{jpg,jpeg,png,webp,svg}',
                         {
                                 eager: false,
                                 query: '?url',
@@ -69,7 +69,7 @@
                 property="og:description"
                 content="探索程式設計的無限可能，與志同道合的夥伴一起成長。"
         />
-        <meta property="og:image" content="/og-image.jpg" />
+        <meta property="og:image" content="/favicon.svg" />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="CYSHIRC - 嘉義高中資訊研究社" />
@@ -77,7 +77,7 @@
                 name="twitter:description"
                 content="探索程式設計的無限可能，與志同道合的夥伴一起成長。"
         />
-        <meta name="twitter:image" content="/og-image.jpg" />
+        <meta name="twitter:image" content="/favicon.svg" />
 </svelte:head>
 
 <div class="page">

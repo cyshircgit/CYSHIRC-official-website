@@ -29,7 +29,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 	<link
-		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap&subset=latin&text=CYSHIRC.%E9%A6%96%E9%A0%81%E6%B4%BB%E5%8B%95%E8%B3%87%E8%A8%8A%E8%81%AF%E7%B5%A1%E8%B3%87%E8%A8%8A%E9%97%9C%E6%96%BC%E6%88%91%E5%80%91"
 		rel="stylesheet"
 	/>
 </svelte:head>

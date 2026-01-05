@@ -4,6 +4,8 @@ import type { PageServerLoad } from './$types';
 
 const CONTENT_DIR = path.resolve('static/handouts');
 
+export const prerender = true;
+
 export const load: PageServerLoad = async () => {
 	try {
 		const files = await fs.readdir(CONTENT_DIR);

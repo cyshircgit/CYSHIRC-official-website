@@ -1,9 +1,24 @@
+export const prerender = true;
+
+export const entries = () => [
+	{ path: '/sitemap.xml' }
+];
+
 export async function GET() {
+	// Get all handout slugs
+	const handouts = await getHandoutSlugs();
+	
 	const pages = [
 		{ url: '', priority: '1.0', changefreq: 'weekly' },
 		{ url: '/about', priority: '0.8', changefreq: 'monthly' },
 		{ url: '/events', priority: '0.9', changefreq: 'weekly' },
-		{ url: '/contact', priority: '0.7', changefreq: 'monthly' }
+		{ url: '/contact', priority: '0.7', changefreq: 'monthly' },
+		{ url: '/handouts', priority: '0.8', changefreq: 'monthly' },
+		...handouts.map(slug => ({
+			url: `/handouts/${slug}`,
+			priority: '0.7',
+			changefreq: 'monthly'
+		}))
 	];
 
 	const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -26,4 +41,20 @@ ${pages
 			'Cache-Control': 'max-age=3600, s-maxage=3600'
 		}
 	});
+}
+
+// Helper function to get all handout slugs
+async function getHandoutSlugs() {
+	const fs = await import('fs/promises');
+	const path = await import('path');
+	
+	const CONTENT_DIR = path.resolve('static/handouts');
+	try {
+		const files = await fs.readdir(CONTENT_DIR);
+		const mdFiles = files.filter((file) => file.endsWith('.md'));
+		return mdFiles.map((file) => file.replace('.md', ''));
+	} catch (error) {
+		console.error('Error reading handouts directory:', error);
+		return [];
+	}
 }
