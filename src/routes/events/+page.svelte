@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { IconCalendar } from '@tabler/icons-svelte';
+	import { EventCard } from '$lib/components';
 	import eventsData from '$lib/data/events.json';
 	import { getUpcomingEvents } from '$lib/utils';
 	import type { EventData } from '$lib/types';
@@ -33,29 +33,11 @@
 
 	<section class="events-section">
 		<div class="container">
-			<div class="events-grid">
-				{#each events as event (event.id)}
-					<article class="event-card">
-						<div class="event-header">
-							<div class="event-icon">
-								<event.icon size={40} stroke={1.5} />
-							</div>
-							<div class="event-meta">
-								<span class="event-category">{event.category}</span>
-								<span class="event-date">
-									<IconCalendar size={16} stroke={2} />
-									{event.date}
-								</span>
-							</div>
-						</div>
-						<h2 class="event-title">{event.title}</h2>
-						<p class="event-description">{event.description}</p>
-						<div class="event-footer">
-							<button class="btn-secondary">了解更多</button>
-						</div>
-					</article>
-				{/each}
-			</div>
+				<div class="events-grid">
+					{#each events as event (event.id)}
+						<EventCard {event} variant="detailed" showAction={true} actionLabel="了解更多" />
+					{/each}
+				</div>
 		</div>
 	</section>
 </div>
@@ -154,122 +136,7 @@
 		}
 	}
 
-.event-card {
-		background: theme.$gray-800;
-		border: 1px solid theme.$gray-700;
-		border-radius: 1.5rem;
-		padding: 2.5rem;
-		transition: all 0.3s theme.$transition-smooth;
 
-		&:hover {
-			transform: translateY(-8px);
-			border-color: theme.$crimson-primary;
-			box-shadow: 0 24px 48px rgba(theme.$crimson-primary, 0.15);
 
-			.event-icon {
-				background: rgba(theme.$crimson-primary, 0.9);
-				border-color: theme.$crimson-primary;
-				transform: scale(1.1);
-				color: #fff;
-			}
-		}
 
-		.event-header {
-			display: flex;
-			align-items: flex-start;
-			gap: 1.5rem;
-			margin-bottom: 1.5rem;
-		}
-
-.event-icon {
-			width: 80px;
-			height: 80px;
-			background: rgba(theme.$crimson-primary, 0.1);
-			border: 2px solid rgba(theme.$crimson-primary, 0.3);
-			border-radius: 1.25rem;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			color: theme.$crimson-light;
-			flex-shrink: 0;
-			transition: all 0.3s theme.$transition-smooth;
-		}
-
-		.event-meta {
-			display: flex;
-			flex-direction: column;
-			gap: 0.5rem;
-			padding-top: 0.5rem;
-		}
-
-.event-category {
-			display: inline-block;
-			font-size: 0.75rem;
-			font-weight: 700;
-			letter-spacing: 0.1em;
-			text-transform: uppercase;
-			color: theme.$crimson-light;
-			background: rgba(theme.$crimson-primary, 0.15);
-			padding: 0.375rem 0.75rem;
-			border-radius: 100px;
-			width: fit-content;
-		}
-
-.event-date {
-			display: flex;
-			align-items: center;
-			gap: 0.5rem;
-			font-size: 0.875rem;
-			color: theme.$gray-400;
-			font-weight: 600;
-
-			:global(svg) {
-				color: theme.$crimson-primary;
-			}
-		}
-
-		.event-title {
-			font-size: 1.75rem;
-			font-weight: 800;
-			line-height: 1.2;
-			letter-spacing: -0.02em;
-			color: #fff;
-			margin: 0 0 1rem;
-		}
-
-.event-description {
-			font-size: 1rem;
-			line-height: 1.7;
-			color: theme.$gray-400;
-			margin: 0 0 2rem;
-		}
-
-		.event-footer {
-			display: flex;
-			gap: 1rem;
-		}
-	}
-
-.btn-secondary {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		background: transparent;
-		color: theme.$crimson-light;
-		padding: 0.875rem 1.75rem;
-		border-radius: 100px;
-		font-weight: 700;
-		font-size: 0.9375rem;
-		letter-spacing: -0.01em;
-		transition: all 0.3s theme.$transition-smooth;
-		border: 2px solid theme.$crimson-primary;
-		cursor: pointer;
-
-		&:hover {
-			background: theme.$crimson-primary;
-			color: #fff;
-			transform: translateY(-2px);
-			box-shadow: 0 12px 24px rgba(theme.$crimson-primary, 0.3);
-		}
-	}
 </style>
